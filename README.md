@@ -12,6 +12,7 @@ Planning to do:
 - PC, NPC and objects (of different types) placement and relocation
 - distance calculations for shooting purposes (will not take into account target speed)
 - custom map marks like "you see a langmine hidden here"
+- Undo/Redo actions
 
 Dreams:
 - Non-passable hexes markings

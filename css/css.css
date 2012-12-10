@@ -38,6 +38,7 @@ body:before {/* thanks to Maleika (Kohoutec)*/
 
 .b-GGrid-toolbar {
 	position: fixed;
+	z-index: 1000;
 	top: 0px;
 	left: 0px;
 	background-color: #fff;
@@ -67,7 +68,7 @@ body:before {/* thanks to Maleika (Kohoutec)*/
 }
 
 .b-GGrid-toolbar_closebutton {
-	background: transparent url("../img/close.png") center center no-repeat;
+	background: transparent url("../img/sprite.png") -20px 0px no-repeat;
 	height: 20px;
 	width: 20px;
 	position: absolute;
@@ -75,7 +76,15 @@ body:before {/* thanks to Maleika (Kohoutec)*/
 	right: 0px;
 	cursor: pointer;
 	border-radius: 10px;
+	border: 1px solid transparent;
+}
+
+.b-GGrid-toolbar_closebutton:hover {
 	border: 1px solid;
+}
+
+.b-GGrid-toolbar_closebutton__closed {
+	background-position: 0px 0px;
 }
 
 .b-GGrid-toolbar_content {
@@ -97,6 +106,25 @@ body:before {/* thanks to Maleika (Kohoutec)*/
 }
 
 .b-GGrid-toolbar_button:hover {
-	-webkit-box-shadow:  0px 0px 1px 0px rgba(255, 0, 0, 0.5);
-	box-shadow:  0px 0px 1px 0px rgba(255, 0, 0, 0.5);
+	-webkit-box-shadow:  0px 0px 1px 1px rgba(0, 0, 255, 0.5);
+	box-shadow:  0px 0px 1px 1px rgba(0, 0, 255, 0.5);
+}
+
+.b-GGrid-toolbar_button__active {
+	-webkit-box-shadow:  0px 0px 1px 1px rgba(255, 0, 0, 0.5);
+	box-shadow:  0px 0px 1px 1px rgba(255, 0, 0, 0.5);
+}
+
+canvas {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#GGrid-eventsCollector {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }

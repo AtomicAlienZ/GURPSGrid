@@ -1,55 +1,30 @@
-// HEX TESTING
 $(function(){
-	var viewCanvas = document.getElementById('canvas_grid');
-	var ctx = viewCanvas.getContext("2d");
-	var viewCanvas2 = document.getElementById('canvas_grid2');
-	var ctx2 = viewCanvas2.getContext("2d");
+	// initializing everything
+	GGrid.init();
 
-	function makeline (fromx, fromy, tox, toy) {
-		ctx.beginPath();
-		ctx.moveTo(fromx,fromy);
-		ctx.lineTo(tox,toy);
-		ctx.stroke();
-	}
+	// Registering modes
+	GGrid.registerMode(new GGridModeHighlightHex());
+	GGrid.registerMode(new GGridModeDistanceMeter());
 
-	// in pixels
-	var s = 50;
-	var h = Math.sin(Math.PI/6) * s;
-	var r = Math.cos(Math.PI/6) * s;
-	var b = s + 2 * h;
-	var w = 2 * r;
+	// Binding mode switchings
+	$('.js-GGrid-mode_button').on('click',function () {
+		var $this = $(this);
 
-	function drawHex (x,y,ctx) {
-		console.log('HEX: ',x,y);
-
-		// Tile drawing
-		// Defining top-left pixel
-		var tlx = x*2*r + (y & 1) * r;
-		var tly = y * (h + s);
-
-		// Drawing hex
-		ctx.beginPath();
-		ctx.moveTo(tlx,tly);
-
-		ctx.moveTo(tlx + r,tly);
-		ctx.lineTo(tlx + 2*r, tly + h);
-		ctx.lineTo(tlx + 2*r, tly + h + s);
-		ctx.lineTo(tlx + r, tly + 2*h + s);
-		ctx.lineTo(tlx, tly + h + s);
-		ctx.lineTo(tlx, tly + h);
-		ctx.lineTo(tlx + r,tly);
-
-		ctx.stroke();
-	}
-
-	for (var x = 0; x < 7; x++) {
-		for (var y = 0; y < 7; y++) {
-			drawHex(x,y,ctx);
+		if (typeof $this.attr('data-mode') == "undefined") {
+			return;
 		}
-	}
 
-	// Initial functions bindings
-	$('#canvas_grid2').mousemove(function (e) {
+		$('.js-GGrid-mode_button').removeClass('b-GGrid-toolbar_button__active');
+		if (GGrid.getCurrentModeName() == $this.attr('data-mode')) {
+			GGrid.deactivateCurrentMode();
+		}
+		else {
+			$this.addClass('b-GGrid-toolbar_button__active');
+			GGrid.activateMode($this.attr('data-mode'));
+		}
+	});
+
+	$('body2').on('click',function (e) {
 		$this = $(this);
 		var offset = $this.offset();
 		var x = e.pageX - offset.left;
@@ -104,11 +79,18 @@ $(function(){
 		drawHex(hexX,hexY,ctx2);
 	});
 
-	$('.js-toolbar').click(function (e) {
+	$('.js-toolbar').on('click mousemove',function (e) {
 		e.stopPropagation();
 	});
 
 	$('.js-toolbar_closebutton').click(function (e) {
-		$(this).parents('.js-toolbar').find('.js-toolbar_content').toggle();
+		var content = $(this).parents('.js-toolbar').find('.js-toolbar_content')
+		content.toggle();
+		if (content.is(':visible')) {
+			$(this).removeClass('b-GGrid-toolbar_closebutton__closed');
+		}
+		else {
+			$(this).addClass('b-GGrid-toolbar_closebutton__closed');
+		}
 	});
 });
