@@ -1,4 +1,5 @@
 function GGridModeHighlightHex () {
+	GGridMode.call(this);
 	this._name = 'highlightHex';
 	this._highlightedHex = null;
 	this._stroke = new GGridStrokeStyle('#00ff00',3,0.5);

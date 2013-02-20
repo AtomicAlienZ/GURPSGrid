@@ -1,4 +1,5 @@
 function GGridModeDistanceMeter () {
+	GGridMode.call(this);
 	this._name = 'distanceMeter';
 
 	// Strat and end points in hex and global coordinates
@@ -13,7 +14,7 @@ function GGridModeDistanceMeter () {
 	// Visual styling
 	this._hexStroke = new GGridStrokeStyle('#009900',3,0.5);
 	this._hexFill = new GGridFillStyle('#009900',0.2);
-	this._arrowStroke = new GGridStrokeStyle();
+	this._arrowStroke = new GGridStrokeStyle('#ff0000',1);
 }
 
 // Extending from GGridStyle
@@ -32,9 +33,24 @@ GGridModeDistanceMeter.prototype.modeEvent = function (coords,type,e) {
 		if ((type == 'mousedown' && this._startPointHex && !this._endPointHex) || type == 'mouseup') {
 			this._endPointHex = this._ggrid.grid.getHexCoords(coords);
 			this._endPointLine = coords;
+
+			// Calculating distance and range-speed modifier
+			// Hex size (taken from GGridHexGrid) = 1 yard/meter
+			var startHexCoords = this._ggrid.grid.getHexCenter(this._startPointHex);
+			var endHexCoords = this._ggrid.grid.getHexCenter(this._endPointHex);
+			var distancePixels = Math.sqrt(
+				Math.pow(startHexCoords.x() - endHexCoords.x(),2) +
+				Math.pow(startHexCoords.y() - endHexCoords.y(),2)
+			);
+
+			var distanceHexes = distancePixels/this._ggrid.grid.getHexOwnWidth();
+
+			// Rounding to first decimal
+			distanceHexes = Math.round(distanceHexes*100)/100
+
+			console.log ('pixels:',distancePixels,'hexes:',distanceHexes);
 		}
 		else {
-			console.log('start');
 			this._ggrid.grid.clearOverlay();
 			this._endPointHex = null;
 			this._endPointLine = null;

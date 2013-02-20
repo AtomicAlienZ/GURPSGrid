@@ -117,5 +117,6 @@ GGridHexGrid.prototype.getHexCoords = function (coordPoint) {
 	return new GGridCoordPoint(hexX,hexY);
 }
 
+GGridHexGrid.prototype.getHexSize = function () {return this._hexSize}
 GGridHexGrid.prototype.getHexOwnWidth = function () {return 2*this._hexSlopeWidth}
 GGridHexGrid.prototype.getHexOwnHeight = function () {return this._hexSlopeHeight + this._hexSize}
