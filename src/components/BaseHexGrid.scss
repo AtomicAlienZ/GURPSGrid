@@ -1,0 +1,22 @@
+.BaseHexGrid {
+  &__bg {
+    fill: #fff;
+    stroke: rgba(#cc0000, .2);
+    stroke-width: 5px;
+  }
+
+  &__grid {
+    fill: none;
+    stroke: rgba(#000, .2);
+    stroke-width: 1px;
+    stroke-dasharray: 3.5;
+  }
+
+  &__text {
+    fill: rgba(#000, .2);
+    font-size: 11px;
+    user-select: none;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+}

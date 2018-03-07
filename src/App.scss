@@ -1,0 +1,59 @@
+@import '~normalize-scss';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500&subset=cyrillic-ext');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  background: repeating-linear-gradient(
+      45deg,
+      #f6f6f6,
+      #f6f6f6 10px,
+      #F0F0F0 10px,
+      #F0F0F0 20px
+  );
+}
+
+strong {
+  font-weight: 500;
+}
+
+// UI elements
+// TODO organize better
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+  line-height: 30px;
+  text-decoration: none;
+  border-radius: 0;
+  padding: 0 5px;
+  background-color: #eeeeee;
+  color: #000;
+  transition: all .2s;
+  cursor: pointer;
+  border: 0;
+  text-align: center;
+
+  &:hover, &:active {
+    background-color: #cccccc;
+  }
+
+  &_active {
+    &, &:hover, &:active {
+      background: #5289b4;
+      color: #ffffff;
+    }
+  }
+}
+
+.App {}
