@@ -27,7 +27,7 @@
     "comma-dangle": [ "warn", "always-multiline" ],
     "no-undef": "warn",
     "quotes": ["warn", "single"],
-    "react/jsx-space-before-closing": ["warn", "always"],
+    "react/jsx-tag-spacing": ["warn"],
     "space-before-function-paren": 0,
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-param-reassign": ["warn", { "props": false }],

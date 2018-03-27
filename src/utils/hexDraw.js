@@ -6,7 +6,7 @@ import {
   getNeighbourHexCoordinates,
   normalizeIndex,
 } from './hexMath';
-import { hexMapToArray, mapHasHex } from './hexStructures';
+import { hexMapToArray, mapHasHex, mapHasNeighbourHex } from './hexStructures';
 
 /**
  * Returns a path string for SVG <path> that draws a hex
@@ -97,7 +97,7 @@ function getUntracedPathEdge (areaMap, areaArr, renderedMap) {
           const key = getHexKey(hex);
 
           if (
-            !mapHasHex(areaMap, getNeighbourHexCoordinates(hex, vertex + 1))
+            !mapHasNeighbourHex(areaMap, hex, vertex + 1)
             && (!renderedMap.has(key) || !renderedMap.get(key).has(vertex))
           ) {
             return { hex, vertex };
@@ -133,7 +133,7 @@ export function getAreaInnerPath (areaMap, size = HEX_SIZE) {
       let path = [];
 
       for (let vertex = 0; vertex < 3; vertex++) {
-        if (mapHasHex(areaMap, getNeighbourHexCoordinates(hex, vertex + 1))) {
+        if (mapHasNeighbourHex(areaMap, hex, vertex + 1)) {
           const { vertX, vertY } = getHexVerticeCoords(hex, vertex + 1, size);
 
           if (!path.length || (path[path.length - 2] !== vertX && path[path.length - 1] !== vertY)) {

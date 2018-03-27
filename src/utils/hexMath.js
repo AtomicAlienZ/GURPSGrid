@@ -7,6 +7,11 @@
 
 import { HEX_SIZE, HEX_WIDTH } from '../constants/grid';
 
+export function roundToDecimals (num, decimals = 4) {
+  const powTen = 10 ** decimals;
+  return Math.round(num * powTen) / powTen;
+}
+
 export function isEven (number) {
   // Bitwise here to determine evenness of `number`. Better then modulo (%) op because works with negative numbers
   return (number & 1) === 0; // eslint-disable-line no-bitwise
@@ -50,8 +55,8 @@ export function oddrToCube({ row, col }) {
 export function oddrToPixels ({ row, col }) {
   return {
     // Bitwise here to determine evenness of `col`. Better then modulo (%) op because works with negative numbers
-    x: HEX_SIZE * Math.sqrt(3) * (col + 0.5 * (row & 1)), // eslint-disable-line no-bitwise
-    y: HEX_SIZE * 3/2 * row,
+    x: roundToDecimals(HEX_SIZE * Math.sqrt(3) * (col + 0.5 * (row & 1))), // eslint-disable-line no-bitwise
+    y: roundToDecimals(HEX_SIZE * 3/2 * row),
   };
 }
 
@@ -118,8 +123,8 @@ export function getHexVerticeCoordsByPixels ({ x, y }, i, size = HEX_SIZE) {
   const angleDeg = (60 * i) + 30;
   const angleRad = (Math.PI / 180) * angleDeg;
   return {
-    vertX: x + size * Math.cos(angleRad),
-    vertY: y + size * Math.sin(angleRad),
+    vertX: roundToDecimals(x + size * Math.cos(angleRad)),
+    vertY: roundToDecimals(y + size * Math.sin(angleRad)),
   };
 }
 

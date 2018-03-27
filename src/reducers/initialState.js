@@ -26,19 +26,6 @@ const activeHexes = [
   [5, -2],
 ];
 
-const activeHexesMap = activeHexes.reduce(
-  (acc, [col, row]) => {
-    if (!acc.has(col)) {
-      acc.set(col, new Set());
-    }
-
-    acc.get(col).add(row);
-
-    return acc;
-  },
-  new Map()
-);
-
 export default {
   objects: [],
   canvasData: {
@@ -52,7 +39,7 @@ export default {
     viewPortW: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
     viewPortH: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
 
-    activeHexesMap,
+    activeHexes,
   },
   mouseData: {
     position: {

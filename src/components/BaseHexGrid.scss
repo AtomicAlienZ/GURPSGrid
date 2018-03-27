@@ -2,7 +2,7 @@
   &__bg {
     fill: #fff;
     stroke: rgba(#cc0000, .2);
-    stroke-width: 5px;
+    stroke-width: 3px;
   }
 
   &__grid {
@@ -10,9 +10,6 @@
     stroke: rgba(#000, .2);
     stroke-width: 1px;
     stroke-dasharray: 3.5;
-
-    stroke-width: 3px;
-    stroke-dasharray: 5;
   }
 
   &__text {
