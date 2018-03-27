@@ -5,7 +5,7 @@
  * Note: “odd-r” horizontal layout coordinate grid is used
  */
 
-import { HEX_SIZE, HEX_WIDTH, HEX_HEIGHT } from '../constants/grid';
+import { HEX_SIZE, HEX_WIDTH } from '../constants/grid';
 
 export function isEven (number) {
   // Bitwise here to determine evenness of `number`. Better then modulo (%) op because works with negative numbers
@@ -107,7 +107,7 @@ export function pixelsToOddr ({ x, y }) {
 }
 
 /**
- * Returns an object with i-th hex vertice coordinates
+ * Returns an object with i-th hex vertex coordinates
  * @param x Hex center X (pixels)
  * @param y Hex center Y (pixels)
  * @param i Vertice index
@@ -123,28 +123,24 @@ export function getHexVerticeCoordsByPixels ({ x, y }, i, size = HEX_SIZE) {
   };
 }
 
-/**
- * Returns a path string for SVG <path> that draws a hex
- * @param x Hex center X (pixels)
- * @param y Hex center Y (pixels)
- * @param size Hex size
- * @return {string}
- */
-export function getHexPathStringByPixels ({ x, y }, size = HEX_SIZE) {
-  let ret = [];
-
-  for (let i = -2; i < 2; i++) {
-    const { vertX, vertY} = getHexVerticeCoordsByPixels({ x, y }, i, size);
-    ret.push(`${vertX} ${vertY}`);
-  }
-
-  return `M ${ret.join(' L ')}`;
-}
-
 export function getHexVerticeCoords (oddrCoords, i, size = HEX_SIZE) {
   return getHexVerticeCoordsByPixels(oddrToPixels(oddrCoords), i, size);
 }
 
-export function getHexPathString (oddrCoords, size = HEX_SIZE) {
-  return getHexPathStringByPixels(oddrToPixels(oddrCoords), size);
+export function normalizeIndex (index) {
+  const mod = index % 6;
+  return Math.abs(mod >= 0 ? mod : 6 + mod);
+}
+
+const oddrDirectionOffsets = [
+  [[+1,  0], [0, +1], [-1, +1], [-1,  0], [-1, -1], [0, -1]],
+  [[+1,  0], [+1, +1], [0, +1], [-1,  0], [0, -1], [+1, -1]],
+];
+
+export function getNeighbourHexCoordinates ({ col, row }, direction) {
+  const normalizedDirection = normalizeIndex(direction);
+  // Looking up shifts for even/odd rows for given direction
+  // Bitwise to determine evenness
+  const [shiftCol, shiftRow] = oddrDirectionOffsets[row & 1][normalizedDirection]; // eslint-disable-line no-bitwise
+  return { col: col + shiftCol, row: row + shiftRow };
 }

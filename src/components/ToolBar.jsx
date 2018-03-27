@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import './ToolBar.scss';
 
-import { TOOLS, TOOLS_DATA_MAP, TOOL_DEBUG, TOOL_DRAG } from '../constants/tools';
+import { TOOLS, TOOLS_DATA_MAP, TOOL_DEBUG } from '../constants/tools';
 import { centerCanvas, selectTool } from '../actions/index';
 
 import AppDebug from './tools/debug/AppDebug';

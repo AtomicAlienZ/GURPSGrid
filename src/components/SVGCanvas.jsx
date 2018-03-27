@@ -32,10 +32,8 @@ class SVGCanvas extends React.PureComponent {
         onMouseUp={this.props.onMouseUp}
       >
         <BaseHexGrid
-          minCol={this.props.data.grid.minCol}
-          maxCol={this.props.data.grid.maxCol}
-          minRow={this.props.data.grid.minRow}
-          maxRow={this.props.data.grid.maxRow}
+          activeHexes={this.props.data.activeHexes}
+          activeHexesMap={this.props.data.activeHexesMap}
         />
 
         {this.props.children}

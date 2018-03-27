@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
+import { connect } from 'react-redux';
 
 import './App.scss';
+
+import { mouseMove, mouseUp, mouseDown } from './actions/index';
 
 import getGlobalMousePosition from './utils/getGlobalMousePosition';
 import getSVGMousePosition from './utils/getSVGMousePosition';
@@ -63,4 +66,18 @@ class App extends React.PureComponent {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  objects: state.objects,
+  canvasData: state.canvasData,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  mouseMove (position, svgPosition) { dispatch(mouseMove(position, svgPosition)); },
+  mouseDown (position) { dispatch(mouseDown(position)); },
+  mouseUp (position) { dispatch(mouseUp(position)); },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

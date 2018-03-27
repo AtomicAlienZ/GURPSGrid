@@ -64,6 +64,8 @@
     "react/jsx-no-target-blank": ["warn"],
     "no-alert": ["error"],
 
+    "array-bracket-spacing": 0,
+
     "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": 0,
 

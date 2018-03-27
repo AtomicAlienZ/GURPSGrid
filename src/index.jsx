@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import AppConnector from './connectors/AppConnector';
+import App from './App';
 import reducer from './reducers/index';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -15,7 +15,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <AppConnector />
+    <App />
   </Provider>,
   document.getElementById('root')
 );

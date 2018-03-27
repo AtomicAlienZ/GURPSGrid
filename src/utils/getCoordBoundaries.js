@@ -1,11 +1,22 @@
-export default function getCoordBoundaries (gridWidth, gridHeight) {
-  const halfWidth = gridWidth / 2;
-  const halfHeight = gridHeight / 2;
+import { hexMapToArray } from './hexStructures';
 
-  return {
-    minCol: 1 - Math.round(halfWidth),
-    maxCol: Math.floor(halfWidth),
-    minRow: 1 - Math.round(halfHeight),
-    maxRow: Math.floor(halfHeight),
-  };
+function hexArrayReducer (acc, { col, row }) {
+  if (acc.minCol === null || col < acc.minCol ) { acc.minCol = col; }
+  if (acc.maxCol === null || col > acc.maxCol ) { acc.maxCol = col; }
+  if (acc.minRow === null || row < acc.minRow ) { acc.minRow = row; }
+  if (acc.maxRow === null || row > acc.maxRow ) { acc.maxRow = row; }
+
+  return acc;
+}
+
+export default function getCoordBoundaries (activeHexesMap) {
+  return hexMapToArray(activeHexesMap).reduce(
+    hexArrayReducer,
+    {
+      minRow: null,
+      maxRow: null,
+      minCol: null,
+      maxCol: null,
+    }
+  );
 };

@@ -1,5 +1,43 @@
-import getCoordBoundaries from '../utils/getCoordBoundaries';
-import { DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT } from '../constants/grid';
+// Col ; Row
+const activeHexes = [
+  // Blob 1 (with holes)
+  [1, -2],
+  [0, -2],
+  [0, 1],
+  [1, 0],
+  [0, 2],
+  [-1, 2],
+  [-2, 1],
+  [-1, 0],
+  [-1, -1],
+  [1, -1],
+  [2, 0],
+  [1, 2],
+  [2, 2],
+  [2, 1],
+
+  // Blob 2
+  [3, -2],
+  [4, -2],
+  [3, -1],
+  [4, -0],
+  [5, 0],
+  [5, -1],
+  [5, -2],
+];
+
+const activeHexesMap = activeHexes.reduce(
+  (acc, [col, row]) => {
+    if (!acc.has(col)) {
+      acc.set(col, new Set());
+    }
+
+    acc.get(col).add(row);
+
+    return acc;
+  },
+  new Map()
+);
 
 export default {
   objects: [],
@@ -14,12 +52,7 @@ export default {
     viewPortW: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
     viewPortH: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
 
-    // Grid data
-    grid: {
-      width: DEFAULT_GRID_WIDTH,
-      height: DEFAULT_GRID_HEIGHT,
-      ...getCoordBoundaries(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT),
-    },
+    activeHexesMap,
   },
   mouseData: {
     position: {

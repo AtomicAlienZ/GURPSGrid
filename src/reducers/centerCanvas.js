@@ -1,4 +1,4 @@
-export default function centerCanvas (state, action) {
+export default function centerCanvas (state) {
   return {
     ...state,
     canvasData: {

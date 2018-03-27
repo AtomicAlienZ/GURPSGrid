@@ -7,8 +7,8 @@ export const mouseDown = (position) => ({ type: MOUSE_DOWN, position });
 export const MOUSE_UP = 'MOUSE_UP';
 export const mouseUp = (position) => ({ type: MOUSE_UP, position });
 
-export const CENTER_CANVAS = 'CENTER_CANVAS';
-export const centerCanvas = () => ({ type: CENTER_CANVAS });
+export const CANVAS_CENTER = 'CANVAS_CENTER';
+export const centerCanvas = () => ({ type: CANVAS_CENTER });
 
-export const SELECT_TOOL = 'SELECT_TOOL';
-export const selectTool = (tool) => ({ type: SELECT_TOOL, tool });
+export const TOOL_SELECT = 'TOOL_SELECT';
+export const selectTool = (tool) => ({ type: TOOL_SELECT, tool });

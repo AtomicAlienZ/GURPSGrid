@@ -1,3 +1,5 @@
+import { TOOL_DRAG } from '../constants/tools';
+
 function dragEverything (state, newState) {
   const dx = state.mouseData.position.x - state.mouseData.dragStartPosition.x;
   const dy = state.mouseData.position.y - state.mouseData.dragStartPosition.y;
@@ -32,7 +34,7 @@ export default function mouseMove (state, action) {
     },
   };
 
-  if (state.mouseData.buttonHeld) {
+  if (state.mouseData.buttonHeld && state.toolActive === TOOL_DRAG) {
     ret = dragEverything(state, ret);
   }
 
