@@ -1,4 +1,5 @@
-import { TOOL_DRAG } from '../constants/tools';
+import { TOOL_CANVASCONFIG } from '../constants/tools';
+import canvasConfigAddDrawOverlay from './tools/canvasConfig/canvasConfigAddDrawOverlay';
 
 function dragEverything (state, newState) {
   const dx = state.mouseData.position.x - state.mouseData.dragStartPosition.x;
@@ -19,7 +20,7 @@ export default function mouseMove (state, action) {
     return state;
   }
 
-  let ret = {
+  let newState = {
     ...state,
     mouseData: {
       ...state.mouseData,
@@ -34,9 +35,13 @@ export default function mouseMove (state, action) {
     },
   };
 
-  if (state.mouseData.buttonHeld && state.toolActive === TOOL_DRAG) {
-    ret = dragEverything(state, ret);
+  if (state.mouseData.buttonHeld) {
+    newState = dragEverything(state, newState);
   }
 
-  return ret;
+  if (state.activeTool === TOOL_CANVASCONFIG) {
+    newState = canvasConfigAddDrawOverlay(newState, action);
+  }
+
+  return newState;
 }

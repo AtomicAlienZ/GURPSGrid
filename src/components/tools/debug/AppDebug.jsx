@@ -21,9 +21,9 @@ class AppDebug extends React.PureComponent {
         <strong>Mouse DragStart:</strong>{' '}
         {this.props.mouseData.dragStartPosition.x} ; {this.props.mouseData.dragStartPosition.y}
         <hr />
-        <strong>ViewBox:</strong> {this.props.canvasData.viewBoxOffsetX} ; {this.props.canvasData.viewBoxOffsetX}<br />
+        <strong>ViewBox:</strong> {this.props.canvasData.viewBoxOffsetX} ; {this.props.canvasData.viewBoxOffsetY}<br />
         <strong>ViewBoxStartDrag:</strong>{' '}
-        {this.props.canvasData.viewBoxStartDragOffsetX} ; {this.props.canvasData.viewBoxStartDragOffsetX}
+        {this.props.canvasData.viewBoxStartDragOffsetX} ; {this.props.canvasData.viewBoxStartDragOffsetY}
         <hr />
         <strong>SVG inner mouse:</strong>{' '}
         {this.props.mouseData.svgPosition.x} ; {this.props.mouseData.svgPosition.y}<br />

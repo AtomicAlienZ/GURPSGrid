@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 
 import './ToolBar.scss';
 
-import { TOOLS, TOOLS_DATA_MAP, TOOL_DEBUG } from '../constants/tools';
+import { TOOLS, TOOLS_DATA_MAP, TOOL_DEBUG, TOOL_CANVASCONFIG } from '../constants/tools';
 import { centerCanvas, selectTool } from '../actions/index';
 
 import AppDebug from './tools/debug/AppDebug';
+import CanvasConfig from './tools/canvasConfig/CanvasConfig';
 
 class ToolBar extends React.PureComponent {
   static propTypes = {
-    toolActive: PropTypes.string,
+    activeTool: PropTypes.string,
 
     centerCanvas: PropTypes.func.isRequired,
     selectTool: PropTypes.func.isRequired,
@@ -26,9 +27,12 @@ class ToolBar extends React.PureComponent {
   renderActiveTool = () => {
     let component = null;
 
-    switch (this.props.toolActive) {
+    switch (this.props.activeTool) {
       case TOOL_DEBUG:
         component = <AppDebug />;
+        break;
+      case TOOL_CANVASCONFIG:
+        component = <CanvasConfig />;
         break;
     }
 
@@ -48,7 +52,7 @@ class ToolBar extends React.PureComponent {
           {TOOLS.map((toolName) => (
             <div
               key={`toolToggle-${toolName}`}
-              className={`btn ${this.props.toolActive === toolName && 'btn_active'} ToolButton mdi mdi-${TOOLS_DATA_MAP[toolName].icon}`}
+              className={`btn ${this.props.activeTool === toolName && 'btn_active'} ToolButton mdi mdi-${TOOLS_DATA_MAP[toolName].icon}`}
               title={TOOLS_DATA_MAP[toolName].name}
               onClick={this.getToolClickHandler(toolName)}
             />
@@ -61,7 +65,7 @@ class ToolBar extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ toolActive }) => ({ toolActive });
+const mapStateToProps = ({ activeTool }) => ({ activeTool });
 
 const mapDispatchToProps = (dispatch) => ({
   centerCanvas () { dispatch(centerCanvas()); },

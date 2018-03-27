@@ -1,4 +1,15 @@
-import { getNeighbourHexCoordinates } from './hexMath';
+import { getNeighbourHexCoordinates, oddrToPixels } from './hexMath';
+
+function normalizeHex (item) {
+  if (item instanceof Array) {
+    return {
+      col: item[0],
+      row: item[1],
+    };
+  }
+
+  return item;
+}
 
 function mapToArrayProcessSetEntry ([ row ]) {
   return { col: this.col, row };
@@ -15,18 +26,8 @@ export function hexMapToArray (map) {
   return Array.from(map.entries()).reduce(mapToArrayReducer, []);
 }
 
-function arrayToMapReducer (acc, item) {
-  let col;
-  let row;
-
-  if (item instanceof Array) {
-    col = item[0];
-    row = item[1];
-  }
-  else {
-    col = item.col;
-    row = item.row;
-  }
+function arrayToMapReducer (acc, hex) {
+  const { col, row } = normalizeHex(hex);
 
   if (!acc.has(col)) {
     acc.set(col, new Set());
@@ -49,4 +50,60 @@ export function mapHasHex (map, { col, row }) {
 
 export function mapHasNeighbourHex (map, hex, direction) {
   return mapHasHex(map, getNeighbourHexCoordinates(hex, direction));
+}
+
+function getCoordBoundariesReducer (acc, { col, row }) {
+  if (acc.minCol === null || col < acc.minCol ) { acc.minCol = col; }
+  if (acc.maxCol === null || col > acc.maxCol ) { acc.maxCol = col; }
+  if (acc.minRow === null || row < acc.minRow ) { acc.minRow = row; }
+  if (acc.maxRow === null || row > acc.maxRow ) { acc.maxRow = row; }
+
+  return acc;
+}
+
+export function getCoordBoundaries (hexes) {
+  let arr;
+
+  if (hexes instanceof Array) {
+    arr = hexes;
+  }
+  else {
+    arr = hexMapToArray(hexes);
+  }
+
+  return arr.map(normalizeHex).reduce(
+    getCoordBoundariesReducer,
+    {
+      minRow: null,
+      maxRow: null,
+      minCol: null,
+      maxCol: null,
+    }
+  );
+}
+
+export function getCenterPixels (area) {
+  const { minRow, maxRow, minCol, maxCol } = getCoordBoundaries(area);
+  return  oddrToPixels({ row: (minRow + maxRow) / 2, col: (minCol + maxCol) / 2 });
+}
+
+export function stateArrayHasHex (arr, hex) {
+  const target = normalizeHex(hex);
+  return !!arr.find(([ col, row ]) => target.row === row && target.col === col);
+}
+
+export function addToStateArray (arr, hex) {
+  const found = stateArrayHasHex(arr, hex);
+  const target = normalizeHex(hex);
+
+  if (!found) {
+    return [...arr, [ target.col, target.row ]];
+  }
+
+  return arr;
+}
+
+export function removeFromStateArray (arr, hex) {
+  const target = normalizeHex(hex);
+  return arr.filter(([ col, row ]) => target.row !== row || target.col !== col);
 }

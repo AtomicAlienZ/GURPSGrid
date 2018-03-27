@@ -1,37 +1,48 @@
+import { getCenterPixels } from '../utils/hexStructures';
+
 // Col ; Row
 const activeHexes = [
   // Blob 1 (with holes)
-  [1, -2],
-  [0, -2],
-  [0, 1],
-  [1, 0],
-  [0, 2],
-  [-1, 2],
-  [-2, 1],
-  [-1, 0],
+  // These 2 bug out for some reason if left alone
   [-1, -1],
-  [1, -1],
-  [2, 0],
-  [1, 2],
-  [2, 2],
-  [2, 1],
+  [0, -2],
+
+  // [1, -2],
+  // [0, 1],
+  // [1, 0],
+  // [0, 2],
+  // [-1, 2],
+  // [-2, 1],
+  // [-1, 0],
+  // [1, -1],
+  // [2, 0],
+  // [1, 2],
+  // [2, 2],
+  // [2, 1],
 
   // Blob 2
-  [3, -2],
-  [4, -2],
-  [3, -1],
-  [4, -0],
-  [5, 0],
-  [5, -1],
-  [5, -2],
+  // [3, -2],
+  // [4, -2],
+  // [3, -1],
+  // [4, -0],
+  // [5, 0],
+  // [5, -1],
+  // [5, -2],
+  // [6, -1],
+  // [7, -1],
+  // [8, -1],
+  // [9, -1],
 ];
+
+const { x, y } = getCenterPixels(activeHexes);
 
 export default {
   objects: [],
+  overlays: [],
   canvasData: {
     // Viewport & position data
-    viewBoxOffsetX: 0,
-    viewBoxOffsetY: 0,
+    viewBoxOffsetX: -x,
+    viewBoxOffsetY: -y,
 
     viewBoxStartDragOffsetX: 0,
     viewBoxStartDragOffsetY: 0,
@@ -56,5 +67,7 @@ export default {
       y: 0,
     },
   },
-  toolActive: null,
+
+  activeTool: null,
+  activeToolData: null,
 };

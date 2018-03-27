@@ -13,7 +13,7 @@ class BaseHexGrid extends React.PureComponent {
   };
 
   drawBg = () => {
-    return getAreaOutlinePath(new Map(this.props.activeHexesMap));
+    return getAreaOutlinePath(this.props.activeHexesMap);
   };
 
   getCoordTexts = () => {

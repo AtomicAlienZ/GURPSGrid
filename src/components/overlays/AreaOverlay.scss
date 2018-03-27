@@ -1,0 +1,16 @@
+.AreaOverlay {
+  cursor: pointer;
+
+  &__bg {
+    fill: rgba(#006600, .05);
+    stroke: rgba(#006600, .05);
+    stroke-width: 3px;
+  }
+
+  &__grid {
+    fill: none;
+    stroke: rgba(#000, .2);
+    stroke-width: 1px;
+    stroke-dasharray: 3.5;
+  }
+}

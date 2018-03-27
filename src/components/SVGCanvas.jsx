@@ -6,10 +6,12 @@ import { hexArrayToMap } from '../utils/hexStructures';
 import './SVGCanvas.scss';
 
 import BaseHexGrid from './BaseHexGrid';
+import MouseOverlays from './MouseOverlays';
 
 class SVGCanvas extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node,
+    overlays: PropTypes.array,
     data: PropTypes.object.isRequired,
 
     trackMouse: PropTypes.func.isRequired,
@@ -40,6 +42,8 @@ class SVGCanvas extends React.PureComponent {
         />
 
         {this.props.children}
+
+        <MouseOverlays overlays={this.props.overlays} />
       </svg>
     );
   }

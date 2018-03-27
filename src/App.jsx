@@ -17,7 +17,8 @@ import ToolBar from './components/ToolBar';
 
 class App extends React.PureComponent {
   static propTypes = {
-    objects: PropTypes.arrayOf(PropTypes.node),
+    // objects: PropTypes.arrayOf(PropTypes.object),
+    overlays: PropTypes.arrayOf(PropTypes.object),
     canvasData: PropTypes.object,
 
     mouseMove: PropTypes.func.isRequired,
@@ -56,8 +57,9 @@ class App extends React.PureComponent {
           trackMouse={this.trackMouse}
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
+          overlays={this.props.overlays}
         >
-          {this.props.objects}
+          {/*TODO {this.props.objects}*/}
         </SVGCanvas>
 
         <ToolBar />
@@ -68,6 +70,7 @@ class App extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   objects: state.objects,
+  overlays: state.overlays,
   canvasData: state.canvasData,
 });
 

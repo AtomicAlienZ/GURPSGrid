@@ -5,7 +5,7 @@ export default function mouseDown (state, action) {
 
   const { x, y } = action.position;
 
-  return {
+  let newState = {
     ...state,
     canvasData: {
       ...state.canvasData,
@@ -27,4 +27,6 @@ export default function mouseDown (state, action) {
       },
     },
   };
+
+  return newState;
 }

@@ -63,16 +63,19 @@ function getTracedPath (areaMap, startHex, startVertex, renderedMap, size = HEX_
       const normalizedTracer = normalizeIndex(tracer);
       const normalizedDirection = normalizeIndex(tracer + 1);
 
-      // Remembering rendered
-      if (!map.has(currentHexKey)) {
-        map.set(currentHexKey, new Set());
+      //
+      if (!(map.has(currentHexKey) && map.get(currentHexKey).has(normalizedTracer))) {
+        // Remembering rendered
+        if (!map.has(currentHexKey)) {
+          map.set(currentHexKey, new Set());
+        }
+
+        map.get(currentHexKey).add(normalizedTracer);
+
+        const { vertX, vertY } = getHexVerticeCoords(currentHex, normalizedDirection, size);
+
+        path.push('L', vertX, vertY );
       }
-
-      map.get(currentHexKey).add(normalizedTracer);
-
-      const { vertX, vertY } = getHexVerticeCoords(currentHex, normalizedDirection, size);
-
-      path.push('L', vertX, vertY );
     }
 
     currentHex = neighbourHex;
