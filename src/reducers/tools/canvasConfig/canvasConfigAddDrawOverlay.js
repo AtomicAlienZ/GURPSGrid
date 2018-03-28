@@ -1,5 +1,5 @@
 import { pixelsToOddr } from '../../../utils/hexMath';
-import { CANVASCONFIGTOOL_TYPES } from '../../../constants/mouseOverlays';
+import { CANVASCONFIGTOOL_TYPES, CANVASCONFIGTOOL_CIRCLE } from '../../../constants/mouseOverlays';
 import getCanvasConfigDrawOverlay from './getCanvasConfigDrawOverlay';
 
 export default function canvasConfigAddDrawOverlay (state, forceChange = false) {
@@ -10,12 +10,11 @@ export default function canvasConfigAddDrawOverlay (state, forceChange = false) 
     let actualChange = false;
 
     if (existing) {
-      if (existing.col !== hex.col || existing.row !== hex.row || forceChange) {
+      let force = forceChange || existing.type === CANVASCONFIGTOOL_CIRCLE;
+
+      if (existing.col !== hex.col || existing.row !== hex.row || force) {
         overlays = overlays.map((overlay) => {
-          if (
-            CANVASCONFIGTOOL_TYPES.indexOf(overlay.type) >= 0
-            && (overlay.col !== hex.col || overlay.row !== hex.row || forceChange)
-          ) {
+          if (CANVASCONFIGTOOL_TYPES.indexOf(overlay.type) >= 0) {
             actualChange = true;
             return getCanvasConfigDrawOverlay(state, hex);
           }

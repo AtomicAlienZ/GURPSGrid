@@ -1,3 +1,5 @@
+import { getRadiusByMousePosition } from '../../../utils/hexMath';
+
 import {
   CANVASCONFIGTOOL_FREEFORM,
   CANVASCONFIGTOOL_CIRCLE,
@@ -29,8 +31,19 @@ export default function getCanvasConfigDrawOverlay (state, { col, row }) {
   };
 
   if (type !== CANVASCONFIGTOOL_FREEFORM) {
-    ret.startCol = state.activeToolData.startCol;
-    ret.startRow = state.activeToolData.startRow;
+    ret.toCol = state.activeToolData.startCol;
+    ret.toRow = state.activeToolData.startRow;
+
+    if (type === CANVASCONFIGTOOL_CIRCLE && ret.toCol !== null && ret.toRow !== null) {
+      const center = { col: ret.toCol, row: ret.toRow };
+      const radii = getRadiusByMousePosition(center, state.mouseData.svgPosition);
+
+      ret = {
+        ...ret,
+        ...center,
+        ...radii,
+      };
+    }
   }
 
   return ret;

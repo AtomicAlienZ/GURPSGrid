@@ -116,20 +116,19 @@ export function pixelsToOddr ({ x, y }) {
  * @param x Hex center X (pixels)
  * @param y Hex center Y (pixels)
  * @param i Vertice index
- * @param size Hex size
  * @return {{vertX: *, vertY: *}}
  */
-export function getHexVerticeCoordsByPixels ({ x, y }, i, size = HEX_SIZE) {
+export function getHexVerticeCoordsByPixels ({ x, y }, i) {
   const angleDeg = (60 * i) + 30;
   const angleRad = (Math.PI / 180) * angleDeg;
   return {
-    vertX: roundToDecimals(x + size * Math.cos(angleRad)),
-    vertY: roundToDecimals(y + size * Math.sin(angleRad)),
+    vertX: roundToDecimals(x + HEX_SIZE * Math.cos(angleRad)),
+    vertY: roundToDecimals(y + HEX_SIZE * Math.sin(angleRad)),
   };
 }
 
-export function getHexVerticeCoords (oddrCoords, i, size = HEX_SIZE) {
-  return getHexVerticeCoordsByPixels(oddrToPixels(oddrCoords), i, size);
+export function getHexVerticeCoords (oddrCoords, i) {
+  return getHexVerticeCoordsByPixels(oddrToPixels(oddrCoords), i);
 }
 
 export function normalizeIndex (index) {
@@ -204,4 +203,34 @@ export function getHexLine (from, to) {
   }
 
   return results;
+}
+
+export function getHexCircle (center, radius) {
+  let results = [];
+  const { x, y, z } = oddrToCube(center);
+
+  for (let dx = -radius; dx <= radius; dx++) {
+    for (let dy = -radius; dy <= radius; dy++) {
+      for (let dz = -radius; dz <= radius; dz++) {
+        if (dx + dy + dz === 0) {
+          results.push(cubeToOddr({ x: x + dx, y: y + dy, z: z + dz }));
+        }
+      }
+    }
+  }
+
+  return results;
+}
+
+export function getRadiusByMousePosition (centerHex, mousePosition) {
+  const { x: centerX, y: centerY } = oddrToPixels(centerHex);
+  const { x, y } = mousePosition;
+
+  const pixelRadius = Math.sqrt(((centerX - x) ** 2) + ((centerY - y) ** 2));
+  const radius = Math.round(pixelRadius / HEX_WIDTH);
+
+  return {
+    pixelRadius,
+    radius,
+  };
 }

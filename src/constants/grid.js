@@ -1,4 +1,4 @@
-export const HEX_SIZE = 40; // Hex side length in pixels
+export const HEX_SIZE = 30; // Hex side length in pixels
 
 // Derived values
 export const HEX_HEIGHT = HEX_SIZE * 2;

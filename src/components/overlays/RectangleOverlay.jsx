@@ -5,16 +5,19 @@ import { getRectOutlinePath } from '../../utils/hexDraw';
 
 class RectangleOverlay extends React.PureComponent {
   static propTypes = {
-    toCol: PropTypes.number.isRequired,
-    toRow: PropTypes.number.isRequired,
-    fromCol: PropTypes.number,
-    fromRow: PropTypes.number,
+    col: PropTypes.number.isRequired,
+    row: PropTypes.number.isRequired,
+    toCol: PropTypes.number,
+    toRow: PropTypes.number,
     classMod: PropTypes.string,
   };
 
   render () {
-    const from = {col: this.props.fromCol || this.props.toCol, row: this.props.fromRow || this.props.toRow};
-    const to = {col: this.props.toCol, row: this.props.toRow};
+    const from = {col: this.props.col, row: this.props.row};
+    const to = {
+      col: this.props.toCol === null ? this.props.col : this.props.toCol,
+      row: this.props.toRow === null ? this.props.row : this.props.toRow,
+    };
     const outline = getRectOutlinePath(from, to);
 
     return (

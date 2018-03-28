@@ -6,11 +6,12 @@ import './MouseOverlays.scss';
 import AreaOverlay from './overlays/AreaOverlay';
 import RectangleOverlay from './overlays/RectangleOverlay';
 import LineOverlay from './overlays/LineOverlay';
+import CircleOverlay from './overlays/CircleOverlay';
 
 import {
   CANVASCONFIGTOOL_RECT,
   CANVASCONFIGTOOL_LINE,
-  // CANVASCONFIGTOOL_CIRCLE,
+  CANVASCONFIGTOOL_CIRCLE,
 } from '../constants/mouseOverlays';
 
 class MouseOverlays extends React.PureComponent {
@@ -20,15 +21,28 @@ class MouseOverlays extends React.PureComponent {
 
   renderOverlay = (overlayData, index) => {
     switch (overlayData.type) {
+      case CANVASCONFIGTOOL_CIRCLE:
+        return (
+          <CircleOverlay
+            key={index}
+            classMod={overlayData.type}
+            col={overlayData.col}
+            row={overlayData.row}
+            radius={overlayData.radius}
+            pixelRadius={overlayData.pixelRadius}
+          />
+        );
+        break;
+
       case CANVASCONFIGTOOL_LINE:
         return (
           <LineOverlay
             key={index}
             classMod={overlayData.type}
-            fromCol={overlayData.startCol}
-            fromRow={overlayData.startRow}
-            toCol={overlayData.col}
-            toRow={overlayData.row}
+            col={overlayData.col}
+            row={overlayData.row}
+            toCol={overlayData.toCol}
+            toRow={overlayData.toRow}
           />
         );
         break;
@@ -38,10 +52,10 @@ class MouseOverlays extends React.PureComponent {
           <RectangleOverlay
             key={index}
             classMod={overlayData.type}
-            fromCol={overlayData.startCol}
-            fromRow={overlayData.startRow}
-            toCol={overlayData.col}
-            toRow={overlayData.row}
+            col={overlayData.col}
+            row={overlayData.row}
+            toCol={overlayData.toCol}
+            toRow={overlayData.toRow}
           />
         );
         break;

@@ -1,4 +1,4 @@
-import { getNeighbourHexCoordinates, oddrToPixels, getHexLine } from './hexMath';
+import { getNeighbourHexCoordinates, oddrToPixels, getHexLine, getHexCircle } from './hexMath';
 
 function normalizeHex (item) {
   if (item instanceof Array) {
@@ -123,6 +123,10 @@ export function getRectHexAreaAsStateArray (from , to) {
 
 export function getLineHexAreaAsStateArray (from , to) {
   return getHexLine(normalizeHex(from), normalizeHex(to)).map(({ col, row }) => [ col, row ]);
+}
+
+export function getCircleHexAreaAsStateArray (center, radius) {
+  return getHexCircle(normalizeHex(center), radius).map(({ col, row }) => [ col, row ]);
 }
 
 export function mergeStateArrays (original, addition) {

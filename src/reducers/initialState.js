@@ -33,6 +33,14 @@ const activeHexes = [
   [9, -1],
 ];
 
+// const activeHexes = [];
+// const siz = 27;
+// for (let col = -siz; col <= siz; col++) {
+//   for (let row = -siz; row <= siz; row++) {
+//     activeHexes.push([col, row]);
+//   }
+// }
+
 const { x, y } = getCenterPixels(activeHexes);
 
 export default {

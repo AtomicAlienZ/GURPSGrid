@@ -1,40 +1,15 @@
-import { HEX_SIZE } from '../constants/grid';
 import {
-  getHexVerticeCoordsByPixels,
   getHexVerticeCoords,
-  oddrToPixels,
   getNeighbourHexCoordinates,
   normalizeIndex,
 } from './hexMath';
 import { hexMapToArray, mapHasHex, mapHasNeighbourHex, getCoordBoundaries } from './hexStructures';
 
-/**
- * Returns a path string for SVG <path> that draws a hex
- * @param x Hex center X (pixels)
- * @param y Hex center Y (pixels)
- * @param size Hex size
- * @return {string}
- */
-export function getHexPathStringByPixels ({ x, y }, size = HEX_SIZE) {
-  let ret = [];
-
-  for (let i = 0; i < 6; i++) {
-    const { vertX, vertY} = getHexVerticeCoordsByPixels({ x, y }, i, size);
-    ret.push(`${vertX} ${vertY}`);
-  }
-
-  return `M ${ret.join(' L ')} Z`;
-}
-
-export function getHexPathString (oddrCoords, size = HEX_SIZE) {
-  return getHexPathStringByPixels(oddrToPixels(oddrCoords), size);
-}
-
 function getHexKey ({ col, row }) {
   return `${col};${row}`;
 }
 
-function getTracedPath (areaMap, startHex, startVertex, renderedMap, size = HEX_SIZE) {
+function getTracedPath (areaMap, startHex, startVertex, renderedMap) {
   let currentHex = startHex;
   let currentVertex = startVertex;
   let currentHexKey = getHexKey(currentHex);
@@ -72,7 +47,7 @@ function getTracedPath (areaMap, startHex, startVertex, renderedMap, size = HEX_
 
         map.get(currentHexKey).add(normalizedTracer);
 
-        const { vertX, vertY } = getHexVerticeCoords(currentHex, normalizedDirection, size);
+        const { vertX, vertY } = getHexVerticeCoords(currentHex, normalizedDirection);
 
         path.push('L', vertX, vertY );
       }
@@ -114,14 +89,14 @@ function getUntracedPathEdge (areaMap, areaArr, renderedMap) {
   );
 }
 
-export function getAreaOutlinePath (areaMap, size = HEX_SIZE) {
+export function getAreaOutlinePath (areaMap) {
   const areaArr = hexMapToArray(areaMap);
   let map = new Map();
   let path = [];
   let edgeStart = getUntracedPathEdge(areaMap, areaArr, map);
 
   while (edgeStart) {
-    let pathData = getTracedPath(areaMap, edgeStart.hex, edgeStart.vertex, map, size);
+    let pathData = getTracedPath(areaMap, edgeStart.hex, edgeStart.vertex, map);
     path.push(...pathData.path);
     map = pathData.map;
     edgeStart = getUntracedPathEdge(areaMap, areaArr, map);
@@ -130,17 +105,17 @@ export function getAreaOutlinePath (areaMap, size = HEX_SIZE) {
   return path.join(' ');
 }
 
-export function getAreaInnerPath (areaMap, size = HEX_SIZE) {
+export function getAreaInnerPath (areaMap) {
   return hexMapToArray(areaMap)
     .map((hex) => {
       let path = [];
 
       for (let vertex = 0; vertex < 3; vertex++) {
         if (mapHasNeighbourHex(areaMap, hex, vertex + 1)) {
-          const { vertX, vertY } = getHexVerticeCoords(hex, vertex + 1, size);
+          const { vertX, vertY } = getHexVerticeCoords(hex, vertex + 1);
 
           if (!path.length || (path[path.length - 2] !== vertX && path[path.length - 1] !== vertY)) {
-            const { vertX, vertY } = getHexVerticeCoords(hex, vertex, size);
+            const { vertX, vertY } = getHexVerticeCoords(hex, vertex);
             path.push('M', vertX, vertY);
           }
 
