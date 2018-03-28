@@ -132,3 +132,7 @@ export function getCircleHexAreaAsStateArray (center, radius) {
 export function mergeStateArrays (original, addition) {
   return addition.reduce(addToStateArray, original);
 }
+
+export function substractStateArrays (original, substraction) {
+  return substraction.reduce(removeFromStateArray, original);
+}

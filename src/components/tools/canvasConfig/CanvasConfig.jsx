@@ -12,6 +12,7 @@ import { canvasConfigChangeProp } from '../../../actions/index';
 class CanvasConfig extends React.PureComponent {
   static propTypes = {
     drawType: PropTypes.string,
+    drawExclude: PropTypes.bool,
 
     changeCanvasConfigProp: PropTypes.func.isRequired,
   };
@@ -22,10 +23,13 @@ class CanvasConfig extends React.PureComponent {
     };
   };
 
+  turnExclusionOn = () => { this.props.changeCanvasConfigProp('drawExclude', true); };
+  turnExclusionOff = () => { this.props.changeCanvasConfigProp('drawExclude', false); };
+
   render () {
     return (
       <div className="CanvasConfig">
-        Draw &nbsp; &nbsp;
+        Draw<br />
 
         <div
           className={`btn mdi mdi-pencil-off ${!this.props.drawType && 'btn_active'}`}
@@ -40,12 +44,16 @@ class CanvasConfig extends React.PureComponent {
           />
         ))}
 
-        {/*<hr />*/}
+        &nbsp; &nbsp;{' '}
 
-        {/*<strong>drawPrevCol:</strong> {this.props.drawPrevCol}<br />*/}
-        {/*<strong>drawPrevRow:</strong> {this.props.drawPrevRow}<br />*/}
-        {/*<strong>startCol:</strong> {this.props.startCol}<br />*/}
-        {/*<strong>startRow:</strong> {this.props.startRow}*/}
+        <div
+          className={`btn mdi mdi-vector-union ${!this.props.drawExclude && 'btn_active'}`}
+          onClick={this.turnExclusionOff}
+        />
+        <div
+          className={`btn mdi mdi-vector-difference-ab ${this.props.drawExclude && 'btn_active'}`}
+          onClick={this.turnExclusionOn}
+        />
       </div>
     );
   }

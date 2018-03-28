@@ -1,5 +1,5 @@
 import { pixelsToOddr } from '../../../utils/hexMath';
-import { addToStateArray } from '../../../utils/hexStructures';
+import { addToStateArray, removeFromStateArray } from '../../../utils/hexStructures';
 import { DRAWTYPE_FREEFORM } from '../../../constants/canvasConfig';
 
 export default function canvasConfigDraw (state) {
@@ -18,13 +18,18 @@ export default function canvasConfigDraw (state) {
         || hex.row !== state.activeToolData.drawPrevRow
       )
     ) {
-      // Adding hexes
-      state.canvasData.activeHexes = addToStateArray(state.canvasData.activeHexes, hex);
-
-      newState.activeToolData = {
-        ...state.activeToolData,
-        drawPrevCol: hex.col,
-        drawPrevRow: hex.row,
+      const func = state.activeToolData.drawExclude ? removeFromStateArray : addToStateArray;
+      newState = {
+        ...newState,
+        canvasData: {
+          ...newState.canvasData,
+          activeHexes: func(newState.canvasData.activeHexes, hex),
+        },
+        activeToolData: {
+          ...state.activeToolData,
+          drawPrevCol: hex.col,
+          drawPrevRow: hex.row,
+        },
       };
     }
 
