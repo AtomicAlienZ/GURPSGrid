@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { hexArrayToMap } from '../utils/hexStructures';
-
 import './SVGCanvas.scss';
-
-import BaseHexGrid from './BaseHexGrid';
-import MouseOverlays from './MouseOverlays';
 
 class SVGCanvas extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node,
-    overlays: PropTypes.array,
     data: PropTypes.object.isRequired,
 
     trackMouse: PropTypes.func.isRequired,
@@ -25,8 +19,6 @@ class SVGCanvas extends React.PureComponent {
     const viewBoxX = 0 - ((viewPortW) / 2) - viewBoxOffsetX;
     const viewBoxY = 0 - ((viewPortH) / 2) - viewBoxOffsetY;
 
-    const activeHexesMap = hexArrayToMap(this.props.data.activeHexes);
-
     return (
       <svg
         id="GURPSGrid-canvas-SVG"
@@ -37,13 +29,7 @@ class SVGCanvas extends React.PureComponent {
         onMouseDown={this.props.onMouseDown}
         onMouseUp={this.props.onMouseUp}
       >
-        <BaseHexGrid
-          activeHexesMap={activeHexesMap}
-        />
-
         {this.props.children}
-
-        <MouseOverlays overlays={this.props.overlays} />
       </svg>
     );
   }

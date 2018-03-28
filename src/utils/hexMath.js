@@ -38,7 +38,7 @@ export function cubeToOddr ({ x, /*y,*/ z }) {
  * @param col
  * @return {{x: number, y: number, z: number}}
  */
-export function oddrToCube({ row, col }) {
+export function oddrToCube({ col, row }) {
   // Bitwise here to determine evenness of `row`. Better then modulo (%) op because works with negative numbers
   const x = col - ((row - (row & 1)) / 2); // eslint-disable-line no-bitwise
   const z = row;
@@ -148,4 +148,60 @@ export function getNeighbourHexCoordinates ({ col, row }, direction) {
   // Bitwise to determine evenness
   const [shiftCol, shiftRow] = oddrDirectionOffsets[row & 1][normalizedDirection]; // eslint-disable-line no-bitwise
   return { col: col + shiftCol, row: row + shiftRow };
+}
+
+export function getDistance (from, to) {
+  const a = oddrToCube(from);
+  const b = oddrToCube(to);
+  return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y), Math.abs(a.z - b.z));
+}
+
+// for floats
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+// for hexes
+function cubeLerp(a, b, t) {
+  return {
+    x: lerp(a.x, b.x, t),
+    y: lerp(a.y, b.y, t),
+    z: lerp(a.z, b.z, t),
+  };
+}
+
+function cubeRound(cube) {
+  let x = Math.round(cube.x);
+  let y = Math.round(cube.y);
+  let z = Math.round(cube.z);
+
+  let xDiff = Math.abs(x - cube.x);
+  let yDiff = Math.abs(y - cube.y);
+  let zDiff = Math.abs(z - cube.z);
+
+  if (xDiff > yDiff && xDiff > zDiff) {
+    x = -y -z;
+  }
+  else if (yDiff > zDiff) {
+    y = -x -z;
+  }
+  else {
+    z = -x -y;
+  }
+
+  return { x, y, z };
+}
+
+export function getHexLine (from, to) {
+  const cubeFrom = oddrToCube(from);
+  const cubeTo = oddrToCube(to);
+  let iters = getDistance(from, to);
+  let results = [];
+  let adder = iters ? 1/iters : 1;
+
+  for (let i = 0; i <= iters; i++) {
+    results.push(cubeToOddr(cubeRound(cubeLerp(cubeFrom, cubeTo, adder * i))));
+  }
+
+  return results;
 }

@@ -1,4 +1,4 @@
-export const DRAWTYPE_FREEFORM = 'hexagon';
+export const DRAWTYPE_FREEFORM = 'pencil';
 export const DRAWTYPE_RECTANGLE = 'shape-rectangle-plus';
 export const DRAWTYPE_LINE = 'vector-line';
 export const DRAWTYPE_CIRCLE = 'shape-circle-plus';

@@ -5,10 +5,11 @@ import './MouseOverlays.scss';
 
 import AreaOverlay from './overlays/AreaOverlay';
 import RectangleOverlay from './overlays/RectangleOverlay';
+import LineOverlay from './overlays/LineOverlay';
 
 import {
   CANVASCONFIGTOOL_RECT,
-  // CANVASCONFIGTOOL_LINE,
+  CANVASCONFIGTOOL_LINE,
   // CANVASCONFIGTOOL_CIRCLE,
 } from '../constants/mouseOverlays';
 
@@ -19,6 +20,19 @@ class MouseOverlays extends React.PureComponent {
 
   renderOverlay = (overlayData, index) => {
     switch (overlayData.type) {
+      case CANVASCONFIGTOOL_LINE:
+        return (
+          <LineOverlay
+            key={index}
+            classMod={overlayData.type}
+            fromCol={overlayData.startCol}
+            fromRow={overlayData.startRow}
+            toCol={overlayData.col}
+            toRow={overlayData.row}
+          />
+        );
+        break;
+
       case CANVASCONFIGTOOL_RECT:
         return (
           <RectangleOverlay

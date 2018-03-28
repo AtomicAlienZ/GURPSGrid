@@ -1,4 +1,4 @@
-import { getNeighbourHexCoordinates, oddrToPixels } from './hexMath';
+import { getNeighbourHexCoordinates, oddrToPixels, getHexLine } from './hexMath';
 
 function normalizeHex (item) {
   if (item instanceof Array) {
@@ -119,6 +119,10 @@ export function getRectHexAreaAsStateArray (from , to) {
   }
 
   return arr;
+}
+
+export function getLineHexAreaAsStateArray (from , to) {
+  return getHexLine(normalizeHex(from), normalizeHex(to)).map(({ col, row }) => [ col, row ]);
 }
 
 export function mergeStateArrays (original, addition) {

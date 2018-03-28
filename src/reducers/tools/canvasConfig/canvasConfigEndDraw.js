@@ -4,10 +4,11 @@ import {
   removeFromStateArray,
   stateArrayHasHex,
   getRectHexAreaAsStateArray,
+  getLineHexAreaAsStateArray,
   mergeStateArrays,
 } from '../../../utils/hexStructures';
 import canvasConfigAddDrawOverlay from './canvasConfigAddDrawOverlay';
-import { DRAWTYPE_RECTANGLE } from '../../../constants/canvasConfig';
+import { DRAWTYPE_RECTANGLE, DRAWTYPE_LINE } from '../../../constants/canvasConfig';
 
 export default function canvasConfigEndDraw (state, action, isClick) {
   if (state.activeToolData.drawType) {
@@ -38,6 +39,20 @@ export default function canvasConfigEndDraw (state, action, isClick) {
 
       if (state.activeToolData.drawType === DRAWTYPE_RECTANGLE) {
         const newHexes = getRectHexAreaAsStateArray(
+          {col: state.activeToolData.startCol, row: state.activeToolData.startRow},
+          hex
+        );
+
+        newState = {
+          ...newState,
+          canvasData: {
+            ...newState.canvasData,
+            activeHexes: mergeStateArrays(newState.canvasData.activeHexes, newHexes),
+          },
+        };
+      }
+      else if (state.activeToolData.drawType === DRAWTYPE_LINE) {
+        const newHexes = getLineHexAreaAsStateArray(
           {col: state.activeToolData.startCol, row: state.activeToolData.startRow},
           hex
         );

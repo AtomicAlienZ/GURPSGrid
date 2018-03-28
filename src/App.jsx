@@ -14,6 +14,8 @@ import { MOUSEMOVE_THROTTLE_INTERVAL } from './constants/general';
 
 import SVGCanvas from './components/SVGCanvas';
 import ToolBar from './components/ToolBar';
+import BaseHexGrid from './components/BaseHexGrid';
+import MouseOverlays from './components/MouseOverlays';
 
 class App extends React.PureComponent {
   static propTypes = {
@@ -57,9 +59,12 @@ class App extends React.PureComponent {
           trackMouse={this.trackMouse}
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
-          overlays={this.props.overlays}
         >
+          <BaseHexGrid activeHexes={this.props.canvasData.activeHexes} />
+
           {/*TODO {this.props.objects}*/}
+
+          <MouseOverlays overlays={this.props.overlays} />
         </SVGCanvas>
 
         <ToolBar />

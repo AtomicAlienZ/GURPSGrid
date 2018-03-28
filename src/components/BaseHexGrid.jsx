@@ -5,19 +5,19 @@ import './BaseHexGrid.scss';
 
 import { oddrToPixels } from '../utils/hexMath';
 import { getAreaOutlinePath, getAreaInnerPath } from '../utils/hexDraw';
-import { hexMapToArray } from '../utils/hexStructures';
+import { hexArrayToMap } from '../utils/hexStructures';
 
 class BaseHexGrid extends React.PureComponent {
   static propTypes = {
-    activeHexesMap: PropTypes.instanceOf(Map).isRequired,
+    activeHexes: PropTypes.array.isRequired,
   };
 
-  drawBg = () => {
-    return getAreaOutlinePath(this.props.activeHexesMap);
+  drawBg = (map) => {
+    return getAreaOutlinePath(map);
   };
 
   getCoordTexts = () => {
-    return hexMapToArray(this.props.activeHexesMap).map(({row, col}) => {
+    return this.props.activeHexes.map(([col, row]) => {
       const { x, y } = oddrToPixels({ row, col });
 
       return (
@@ -33,15 +33,16 @@ class BaseHexGrid extends React.PureComponent {
     });
   };
 
-  drawActiveHexes = () => {
-    return getAreaInnerPath(this.props.activeHexesMap);
+  drawActiveHexes = (map) => {
+    return getAreaInnerPath(map);
   };
 
   render () {
+    const activeHexesMap = hexArrayToMap(this.props.activeHexes);
     return (
       <g className="BaseHexGrid">
-        <path d={this.drawBg()} className="BaseHexGrid__bg" />
-        <path d={this.drawActiveHexes()} className="BaseHexGrid__grid" />
+        <path d={this.drawBg(activeHexesMap)} className="BaseHexGrid__bg" />
+        <path d={this.drawActiveHexes(activeHexesMap)} className="BaseHexGrid__grid" />
         {this.getCoordTexts()}
       </g>
     );
