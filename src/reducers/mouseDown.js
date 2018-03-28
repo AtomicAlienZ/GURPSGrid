@@ -1,9 +1,10 @@
+import { TOOL_CANVASCONFIG } from '../constants/tools';
+import canvasConfigStartDraw from './tools/canvasConfig/canvasConfigStartDraw';
+
 export default function mouseDown (state, action) {
   if (!action.position) {
     return state;
   }
-
-  const { x, y } = action.position;
 
   let newState = {
     ...state,
@@ -16,17 +17,23 @@ export default function mouseDown (state, action) {
       ...state.mouseData,
       position: {
         ...state.mouseData.position,
-        x,
-        y,
+        ...action.position,
+      },
+      svgPosition: {
+        ...state.mouseData.svgPosition,
+        ...action.svgPosition,
       },
       buttonHeld: true,
       dragStartPosition: {
         ...state.mouseData.position,
-        x,
-        y,
+        ...action.position,
       },
     },
   };
+
+  if (newState.activeTool === TOOL_CANVASCONFIG) {
+    newState = canvasConfigStartDraw(newState, action);
+  }
 
   return newState;
 }

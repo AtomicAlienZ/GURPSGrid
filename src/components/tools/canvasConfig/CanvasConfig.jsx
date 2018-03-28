@@ -2,26 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import './CanvasConfig.scss';
+
+import { DRAWTYPES } from '../../../constants/canvasConfig';
+
 // actions
 import { canvasConfigChangeProp } from '../../../actions/index';
 
 class CanvasConfig extends React.PureComponent {
   static propTypes = {
-    drawActive: PropTypes.bool.isRequired,
+    drawType: PropTypes.string,
 
     changeCanvasConfigProp: PropTypes.func.isRequired,
   };
 
-  toggleDraw = () => {
-    this.props.changeCanvasConfigProp('drawActive', !this.props.drawActive);
+  getDrawTypeChanger = (type) => {
+    return () => {
+      this.props.changeCanvasConfigProp('drawType', type);
+    };
   };
 
   render () {
     return (
       <div className="CanvasConfig">
-        <div className={`btn ${this.props.drawActive && 'btn_active'}`} onClick={this.toggleDraw}>
-          Draw
-        </div>
+        Draw &nbsp; &nbsp;
+
+        <div
+          className={`btn mdi mdi-pencil-off ${!this.props.drawType && 'btn_active'}`}
+          onClick={this.getDrawTypeChanger(null)}
+        />
+
+        {DRAWTYPES.map((type) => (
+          <div
+            key={type}
+            className={`btn mdi mdi-${type} ${this.props.drawType === type && 'btn_active'}`}
+            onClick={this.getDrawTypeChanger(type)}
+          />
+        ))}
+
+        {/*<hr />*/}
+
+        {/*<strong>drawPrevCol:</strong> {this.props.drawPrevCol}<br />*/}
+        {/*<strong>drawPrevRow:</strong> {this.props.drawPrevRow}<br />*/}
+        {/*<strong>startCol:</strong> {this.props.startCol}<br />*/}
+        {/*<strong>startRow:</strong> {this.props.startRow}*/}
       </div>
     );
   }

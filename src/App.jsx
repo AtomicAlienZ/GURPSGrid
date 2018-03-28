@@ -39,7 +39,7 @@ class App extends React.PureComponent {
 
   onMouseDown = (event) => {
     if (isLeftMouseButton(event)) {
-      this.props.mouseDown(getGlobalMousePosition(event));
+      this.props.mouseDown(getGlobalMousePosition(event), getSVGMousePosition(event));
     }
   };
 
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   mouseMove (position, svgPosition) { dispatch(mouseMove(position, svgPosition)); },
-  mouseDown (position) { dispatch(mouseDown(position)); },
+  mouseDown (position, svgPosition) { dispatch(mouseDown(position, svgPosition)); },
   mouseUp (position) { dispatch(mouseUp(position)); },
 });
 

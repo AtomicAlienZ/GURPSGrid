@@ -43,6 +43,7 @@ strong {
   cursor: pointer;
   border: 0;
   text-align: center;
+  min-width: 31px;
 
   &:hover, &:active {
     background-color: #cccccc;
@@ -54,6 +55,10 @@ strong {
       color: #ffffff;
     }
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
 }
 
 .App {}

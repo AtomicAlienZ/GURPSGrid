@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './MouseOverlays.scss';
+
 import AreaOverlay from './overlays/AreaOverlay';
+import RectangleOverlay from './overlays/RectangleOverlay';
+
+import {
+  CANVASCONFIGTOOL_RECT,
+  // CANVASCONFIGTOOL_LINE,
+  // CANVASCONFIGTOOL_CIRCLE,
+} from '../constants/mouseOverlays';
 
 class MouseOverlays extends React.PureComponent {
   static propTypes = {
@@ -9,13 +18,31 @@ class MouseOverlays extends React.PureComponent {
   };
 
   renderOverlay = (overlayData, index) => {
-    return (
-      <AreaOverlay
-        key={index}
-        data={overlayData}
-        areaArray={[[overlayData.col, overlayData.row]]}
-      />
-    );
+    switch (overlayData.type) {
+      case CANVASCONFIGTOOL_RECT:
+        return (
+          <RectangleOverlay
+            key={index}
+            classMod={overlayData.type}
+            fromCol={overlayData.startCol}
+            fromRow={overlayData.startRow}
+            toCol={overlayData.col}
+            toRow={overlayData.row}
+          />
+        );
+        break;
+
+      // Simple single hex
+      default:
+        return (
+          <AreaOverlay
+            key={index}
+            classMod={overlayData.type}
+            areaArray={[[overlayData.col, overlayData.row]]}
+          />
+        );
+        break;
+    }
   };
 
   render () {

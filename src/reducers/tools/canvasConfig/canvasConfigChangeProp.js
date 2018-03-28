@@ -15,7 +15,7 @@ export default function canvasConfigChangeProp (state, action) {
     },
   };
 
-  if (action.prop === 'drawActive' && !action.value) {
+  if (action.prop === 'drawType' && !action.value) {
     newState = removeCanvasConfigDrawOverlay(newState);
   }
 

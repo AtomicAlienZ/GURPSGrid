@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './AreaOverlay.scss';
-
 import { getAreaOutlinePath, getAreaInnerPath } from '../../utils/hexDraw';
 import { hexArrayToMap } from '../../utils/hexStructures';
 
-class AreaOverlay extends React.PureComponent {
+class MouseOverlay extends React.PureComponent {
   static propTypes = {
-    data: PropTypes.object.isRequired,
     areaArray: PropTypes.array.isRequired,
+    classMod: PropTypes.string,
     drawGrid: PropTypes.bool,
   };
 
@@ -19,16 +17,15 @@ class AreaOverlay extends React.PureComponent {
 
   render () {
     const map = hexArrayToMap(this.props.areaArray);
-    const classMod = this.props.data.type;
 
     return (
-      <g className="AreaOverlay">
-        <path d={getAreaOutlinePath(map)} className={`AreaOverlay__bg AreaOverlay__bg_${classMod}`} />
+      <g className="MouseOverlay">
+        <path d={getAreaOutlinePath(map)} className={`MouseOverlay__bg MouseOverlay__bg_${this.props.classMod}`} />
         {this.props.drawGrid
-        && <path d={getAreaInnerPath(map)} className={`AreaOverlay__grid AreaOverlay__grid_${classMod}`} />}
+        && <path d={getAreaInnerPath(map)} className={`MouseOverlay__grid MouseOverlay__grid_${this.props.classMod}`} />}
       </g>
     );
   }
 }
 
-export default AreaOverlay;
+export default MouseOverlay;

@@ -1,7 +1,7 @@
 import { MOUSE_CLICK_TOLERANCE } from '../constants/general';
 import { TOOL_CANVASCONFIG } from '../constants/tools';
 
-import canvasConfigClick from './tools/canvasConfig/canvasConfigClick';
+import canvasConfigEndDraw from './tools/canvasConfig/canvasConfigEndDraw';
 
 export default function mouseDown (state, action) {
   if (!action.position) {
@@ -38,10 +38,10 @@ export default function mouseDown (state, action) {
 
   // We process "click" event iff mouse has moved not more than MOUSE_CLICK_TOLERANCE pixels
   // between mousedown and mouseup events
-  if (mouseMovedDistance <= MOUSE_CLICK_TOLERANCE) {
-    if (state.activeTool === TOOL_CANVASCONFIG) {
-      newState = canvasConfigClick(newState, action);
-    }
+  const isClick = mouseMovedDistance <= MOUSE_CLICK_TOLERANCE;
+
+  if (state.activeTool === TOOL_CANVASCONFIG) {
+    newState = canvasConfigEndDraw(newState, action, isClick);
   }
 
   return newState;

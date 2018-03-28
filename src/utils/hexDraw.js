@@ -6,7 +6,7 @@ import {
   getNeighbourHexCoordinates,
   normalizeIndex,
 } from './hexMath';
-import { hexMapToArray, mapHasHex, mapHasNeighbourHex } from './hexStructures';
+import { hexMapToArray, mapHasHex, mapHasNeighbourHex, getCoordBoundaries } from './hexStructures';
 
 /**
  * Returns a path string for SVG <path> that draws a hex
@@ -151,4 +151,48 @@ export function getAreaInnerPath (areaMap, size = HEX_SIZE) {
       return path.join(' ');
     })
     .join(' ');
+}
+
+export function getRectOutlinePath (from, to) {
+  let path = [];
+  const { minCol, maxCol, minRow, maxRow } = getCoordBoundaries([from, to]);
+
+  // Top boundary
+  for (let col = minCol; col <= maxCol; col++) {
+    for (let i = 3; i <= 4; i++) {
+      let vert = getHexVerticeCoords({ row: minRow, col }, i);
+      path.push(col === minCol && i === 3 ? 'M' : 'L', vert.vertX, vert.vertY);
+    }
+  }
+
+  // Right boundary
+  for (let row = minRow; row <= maxRow; row++) {
+    for (let i = -1; i <= 0; i++) {
+      let vert = getHexVerticeCoords({ row, col: maxCol }, i);
+      path.push('L', vert.vertX, vert.vertY);
+    }
+  }
+
+  // Bottom boundary
+  for (let col = maxCol; col >= minCol; col--) {
+    for (let i = 0; i <= 1; i++) {
+      let vert = getHexVerticeCoords({ row: maxRow, col }, i);
+      path.push(col === minRow && i === 3 ? 'M' : 'L', vert.vertX, vert.vertY);
+    }
+  }
+
+  let vert = getHexVerticeCoords({ row: maxRow, col: minCol }, 2);
+  path.push('L', vert.vertX, vert.vertY);
+
+  // Left boundary
+  for (let row = maxRow; row >= minRow; row--) {
+    for (let i = 2; i <= 3; i++) {
+      let vert = getHexVerticeCoords({ row, col: minCol }, i);
+      path.push('L', vert.vertX, vert.vertY);
+    }
+  }
+
+  path.push('Z');
+
+  return path.join(' ');
 }

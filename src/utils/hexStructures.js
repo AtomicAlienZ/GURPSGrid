@@ -107,3 +107,20 @@ export function removeFromStateArray (arr, hex) {
   const target = normalizeHex(hex);
   return arr.filter(([ col, row ]) => target.row !== row || target.col !== col);
 }
+
+export function getRectHexAreaAsStateArray (from , to) {
+  const { minCol, maxCol, minRow, maxRow } = getCoordBoundaries([from, to]);
+  let arr = [];
+
+  for (let col = minCol; col <= maxCol; col++) {
+    for (let row = minRow; row <= maxRow; row++) {
+      arr.push([col, row]);
+    }
+  }
+
+  return arr;
+}
+
+export function mergeStateArrays (original, addition) {
+  return addition.reduce(addToStateArray, original);
+}

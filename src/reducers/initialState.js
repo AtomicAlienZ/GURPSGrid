@@ -3,35 +3,34 @@ import { getCenterPixels } from '../utils/hexStructures';
 // Col ; Row
 const activeHexes = [
   // Blob 1 (with holes)
-  // These 2 bug out for some reason if left alone
   [-1, -1],
   [0, -2],
 
-  // [1, -2],
-  // [0, 1],
-  // [1, 0],
-  // [0, 2],
-  // [-1, 2],
-  // [-2, 1],
-  // [-1, 0],
-  // [1, -1],
-  // [2, 0],
-  // [1, 2],
-  // [2, 2],
-  // [2, 1],
+  [1, -2],
+  [0, 1],
+  [1, 0],
+  [0, 2],
+  [-1, 2],
+  [-2, 1],
+  [-1, 0],
+  [1, -1],
+  [2, 0],
+  [1, 2],
+  [2, 2],
+  [2, 1],
 
   // Blob 2
-  // [3, -2],
-  // [4, -2],
-  // [3, -1],
-  // [4, -0],
-  // [5, 0],
-  // [5, -1],
-  // [5, -2],
-  // [6, -1],
-  // [7, -1],
-  // [8, -1],
-  // [9, -1],
+  [3, -2],
+  [4, -2],
+  [3, -1],
+  [4, -0],
+  [5, 0],
+  [5, -1],
+  [5, -2],
+  [6, -1],
+  [7, -1],
+  [8, -1],
+  [9, -1],
 ];
 
 const { x, y } = getCenterPixels(activeHexes);
@@ -67,6 +66,8 @@ export default {
       y: 0,
     },
   },
+
+  dragBlocked: false,
 
   activeTool: null,
   activeToolData: null,
