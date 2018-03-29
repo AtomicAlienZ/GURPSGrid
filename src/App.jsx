@@ -21,6 +21,7 @@ class App extends React.PureComponent {
   static propTypes = {
     // objects: PropTypes.arrayOf(PropTypes.object),
     overlays: PropTypes.arrayOf(PropTypes.object),
+    activeHexes: PropTypes.arrayOf(PropTypes.array),
     canvasData: PropTypes.object,
 
     mouseMove: PropTypes.func.isRequired,
@@ -60,7 +61,7 @@ class App extends React.PureComponent {
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
         >
-          <BaseHexGrid activeHexes={this.props.canvasData.activeHexes} />
+          <BaseHexGrid activeHexes={this.props.activeHexes} />
 
           {/*TODO {this.props.objects}*/}
 
@@ -77,6 +78,7 @@ const mapStateToProps = (state) => ({
   objects: state.objects,
   overlays: state.overlays,
   canvasData: state.canvasData,
+  activeHexes: state.activeHexes,
 });
 
 const mapDispatchToProps = (dispatch) => ({

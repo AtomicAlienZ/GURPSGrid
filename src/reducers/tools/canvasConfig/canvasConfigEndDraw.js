@@ -12,7 +12,7 @@ import {
 import canvasConfigAddDrawOverlay from './canvasConfigAddDrawOverlay';
 import { DRAWTYPE_RECTANGLE, DRAWTYPE_LINE, DRAWTYPE_CIRCLE } from '../../../constants/canvasConfig';
 
-export default function canvasConfigEndDraw (state, action, isClick) {
+export default function canvasConfigEndDraw (state) {
   if (state.activeToolData.drawType) {
     let newState = {
       ...state,
@@ -51,10 +51,7 @@ export default function canvasConfigEndDraw (state, action, isClick) {
 
     newState = {
       ...newState,
-      canvasData: {
-        ...newState.canvasData,
-        activeHexes: func(newState.canvasData.activeHexes, newHexes),
-      },
+      activeHexes: func(newState.activeHexes, newHexes),
     };
 
     return newState;

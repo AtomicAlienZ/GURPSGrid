@@ -46,6 +46,7 @@ const { x, y } = getCenterPixels(activeHexes);
 export default {
   objects: [],
   overlays: [],
+  activeHexes,
   canvasData: {
     // Viewport & position data
     viewBoxOffsetX: -x,
@@ -56,8 +57,6 @@ export default {
 
     viewPortW: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
     viewPortH: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-
-    activeHexes,
   },
   mouseData: {
     position: {

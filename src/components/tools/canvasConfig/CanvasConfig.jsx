@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import './CanvasConfig.scss';
 
-import { DRAWTYPES } from '../../../constants/canvasConfig';
+import DrawType from './DrawType';
 
 // actions
 import { canvasConfigChangeProp } from '../../../actions/index';
@@ -17,42 +17,15 @@ class CanvasConfig extends React.PureComponent {
     changeCanvasConfigProp: PropTypes.func.isRequired,
   };
 
-  getDrawTypeChanger = (type) => {
-    return () => {
-      this.props.changeCanvasConfigProp('drawType', type);
-    };
-  };
-
-  turnExclusionOn = () => { this.props.changeCanvasConfigProp('drawExclude', true); };
-  turnExclusionOff = () => { this.props.changeCanvasConfigProp('drawExclude', false); };
-
   render () {
     return (
       <div className="CanvasConfig">
-        Draw<br />
+        Active area
 
-        <div
-          className={`btn mdi mdi-pencil-off ${!this.props.drawType && 'btn_active'}`}
-          onClick={this.getDrawTypeChanger(null)}
-        />
-
-        {DRAWTYPES.map((type) => (
-          <div
-            key={type}
-            className={`btn mdi mdi-${type} ${this.props.drawType === type && 'btn_active'}`}
-            onClick={this.getDrawTypeChanger(type)}
-          />
-        ))}
-
-        &nbsp; &nbsp;{' '}
-
-        <div
-          className={`btn mdi mdi-vector-union ${!this.props.drawExclude && 'btn_active'}`}
-          onClick={this.turnExclusionOff}
-        />
-        <div
-          className={`btn mdi mdi-vector-difference-ab ${this.props.drawExclude && 'btn_active'}`}
-          onClick={this.turnExclusionOn}
+        <DrawType
+          drawType={this.props.drawType}
+          drawExclude={this.props.drawExclude}
+          changeCanvasConfigProp={this.props.changeCanvasConfigProp}
         />
       </div>
     );

@@ -19,10 +19,7 @@ export default function canvasConfigStartDraw (state, action) {
       const func = state.activeToolData.drawExclude ? removeFromStateArray : addToStateArray;
       newState = {
         ...newState,
-        canvasData: {
-          ...newState.canvasData,
-          activeHexes: func(newState.canvasData.activeHexes, pixelsToOddr(newState.mouseData.svgPosition)),
-        },
+        activeHexes: func(newState.activeHexes, pixelsToOddr(newState.mouseData.svgPosition)),
       };
     }
 

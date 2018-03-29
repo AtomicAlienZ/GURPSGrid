@@ -1,7 +1,7 @@
 import { getCenterPixels } from '../utils/hexStructures';
 
 export default function canvasCenter (state) {
-  const { x, y } = getCenterPixels(state.canvasData.activeHexes);
+  const { x, y } = getCenterPixels(state.activeHexes);
 
   return {
     ...state,

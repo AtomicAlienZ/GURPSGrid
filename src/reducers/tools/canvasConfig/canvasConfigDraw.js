@@ -21,10 +21,7 @@ export default function canvasConfigDraw (state) {
       const func = state.activeToolData.drawExclude ? removeFromStateArray : addToStateArray;
       newState = {
         ...newState,
-        canvasData: {
-          ...newState.canvasData,
-          activeHexes: func(newState.canvasData.activeHexes, hex),
-        },
+        activeHexes: func(newState.activeHexes, hex),
         activeToolData: {
           ...state.activeToolData,
           drawPrevCol: hex.col,
