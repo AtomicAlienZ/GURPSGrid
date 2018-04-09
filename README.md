@@ -1,3 +1,6 @@
+This version is deprecated. Development is continued in [v 2.0](https://github.com/AtomicAlienZ/GURPSGrid/tree/v2.0)
+===
+
 GURPSGrid
 =========
 
