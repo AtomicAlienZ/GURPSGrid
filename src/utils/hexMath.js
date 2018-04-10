@@ -4,13 +4,8 @@
  * Source: https://www.redblobgames.com/grids/hexagons/
  * Note: “odd-r” horizontal layout coordinate grid is used
  */
-
 import { HEX_SIZE, HEX_WIDTH } from '../constants/grid';
-
-export function roundToDecimals (num, decimals = 4) {
-  const powTen = 10 ** decimals;
-  return Math.round(num * powTen) / powTen;
-}
+import roundToDecimals from './roundToDecimals';
 
 export function isEven (number) {
   // Bitwise here to determine evenness of `number`. Better then modulo (%) op because works with negative numbers

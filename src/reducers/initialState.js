@@ -1,4 +1,5 @@
 import { getCenterPixels } from '../utils/hexStructures';
+import getViewPortDimensions from '../utils/getViewPortDimensions';
 
 // Col ; Row
 const activeHexes = [
@@ -42,11 +43,17 @@ const activeHexes = [
 // }
 
 const { x, y } = getCenterPixels(activeHexes);
+const { width: viewPortW, height: viewPortH } = getViewPortDimensions();
 
 export default {
+  // These things should be persistent/saved to a file
   objects: [],
-  overlays: [],
   activeHexes,
+  floorAreas: [],
+  textures: [],
+
+  // Runtime stuff. Not needed to be persistent
+  overlays: [],
   canvasData: {
     // Viewport & position data
     viewBoxOffsetX: -x,
@@ -55,8 +62,8 @@ export default {
     viewBoxStartDragOffsetX: 0,
     viewBoxStartDragOffsetY: 0,
 
-    viewPortW: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-    viewPortH: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+    viewPortW,
+    viewPortH,
   },
   mouseData: {
     position: {

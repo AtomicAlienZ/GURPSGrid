@@ -1,0 +1,17 @@
+.ui-input {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  border-radius: 5px;
+  padding: 0 5px;
+  line-height: 30px;
+  font-size: 14px;
+  border: 1px solid lightgray;
+  outline: none;
+
+  transition: all .2s;
+
+  &:focus {
+    border-color: gray;
+  }
+}

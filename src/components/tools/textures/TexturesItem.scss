@@ -1,0 +1,38 @@
+.TexturesItem {
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid lightgray;
+  }
+
+  &__preview {
+    flex: 0 0 70px;
+    height: 70px;
+    background: transparent center center no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  &__data {
+    flex: 1 1 auto;
+    margin-right: 10px;
+  }
+
+  &__remove {
+    color: red;
+    cursor: pointer;
+    margin-left: auto;
+    flex: 0 0 16px;
+    height: 17px;
+  }
+
+  &__aux {
+    font-size: 80%;
+    color: gray;
+    margin-top: 5px;
+  }
+}

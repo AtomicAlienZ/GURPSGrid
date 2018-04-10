@@ -7,6 +7,7 @@ class DrawType extends React.PureComponent {
   static propTypes = {
     drawType: PropTypes.string,
     drawExclude: PropTypes.bool,
+    // drawFloorTiles: PropTypes.bool,
 
     changeCanvasConfigProp: PropTypes.func.isRequired,
   };
@@ -19,6 +20,9 @@ class DrawType extends React.PureComponent {
 
   turnExclusionOn = () => { this.props.changeCanvasConfigProp('drawExclude', true); };
   turnExclusionOff = () => { this.props.changeCanvasConfigProp('drawExclude', false); };
+
+  turnDrawFloorOn = () => { this.props.changeCanvasConfigProp('drawFloorTiles', true); };
+  turnDrawFloorOff = () => { this.props.changeCanvasConfigProp('drawFloorTiles', false); };
 
   render () {
     return (
@@ -46,6 +50,17 @@ class DrawType extends React.PureComponent {
           className={`btn mdi mdi-vector-difference-ab ${this.props.drawExclude && 'btn_active'}`}
           onClick={this.turnExclusionOn}
         />
+
+        {/*&nbsp; &nbsp;{' '}*/}
+
+        {/*<div*/}
+          {/*className={`btn mdi mdi-hexagon ${!this.props.drawFloorTiles && 'btn_active'}`}*/}
+          {/*onClick={this.turnDrawFloorOff}*/}
+        {/*/>*/}
+        {/*<div*/}
+          {/*className={`btn mdi mdi-chart-scatterplot-hexbin ${this.props.drawFloorTiles && 'btn_active'}`}*/}
+          {/*onClick={this.turnDrawFloorOn}*/}
+        {/*/>*/}
       </div>
     );
   }

@@ -2,10 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
 import { connect } from 'react-redux';
+import Alert from 'react-s-alert';
+
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+// import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+// import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
+// import 'react-s-alert/dist/s-alert-css-effects/flip.css';
+// import 'react-s-alert/dist/s-alert-css-effects/genie.css';
+// import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+// import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 
 import './App.scss';
 
-import { mouseMove, mouseUp, mouseDown } from './actions/index';
+import { mouseMove, mouseUp, mouseDown, viewportRecalc } from './actions/index';
 
 import getGlobalMousePosition from './utils/getGlobalMousePosition';
 import getSVGMousePosition from './utils/getSVGMousePosition';
@@ -27,6 +37,7 @@ class App extends React.PureComponent {
     mouseMove: PropTypes.func.isRequired,
     mouseDown: PropTypes.func.isRequired,
     mouseUp: PropTypes.func.isRequired,
+    viewportRecalc: PropTypes.func.isRequired,
   };
 
   throttledTrackMouse = _.throttle(
@@ -34,6 +45,14 @@ class App extends React.PureComponent {
       this.props.mouseMove(position, svgPosition);
     },
     MOUSEMOVE_THROTTLE_INTERVAL
+  );
+
+  throttledOnViewportResize = _.throttle(
+    () => {
+      this.props.viewportRecalc();
+    },
+    MOUSEMOVE_THROTTLE_INTERVAL,
+    { leading: false },
   );
 
   trackMouse = (event) => {
@@ -52,9 +71,18 @@ class App extends React.PureComponent {
     }
   };
 
+  componentWillMount = () => {
+    window.addEventListener('resize', this.throttledOnViewportResize);
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.throttledOnViewportResize);
+  };
+
   render () {
     return (
       <div className="App">
+        <Alert effect="slide" stack={true} position="top-left" />
         <SVGCanvas
           data={this.props.canvasData}
           trackMouse={this.trackMouse}
@@ -85,6 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
   mouseMove (position, svgPosition) { dispatch(mouseMove(position, svgPosition)); },
   mouseDown (position, svgPosition) { dispatch(mouseDown(position, svgPosition)); },
   mouseUp (position) { dispatch(mouseUp(position)); },
+  viewportRecalc () { dispatch(viewportRecalc()); },
 });
 
 export default connect(

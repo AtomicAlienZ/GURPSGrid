@@ -4,11 +4,19 @@ import { connect } from 'react-redux';
 
 import './ToolBar.scss';
 
-import { TOOLS, TOOLS_DATA_MAP, TOOL_DEBUG, TOOL_CANVASCONFIG } from '../constants/tools';
+import {
+  TOOLS,
+  TOOLS_DATA_MAP,
+
+  TOOL_DEBUG,
+  TOOL_CANVASCONFIG,
+  TOOL_TEXTURES,
+} from '../constants/tools';
 import { centerCanvas, selectTool } from '../actions/index';
 
 import AppDebug from './tools/debug/AppDebug';
 import CanvasConfig from './tools/canvasConfig/CanvasConfig';
+import Textures from './tools/textures/Textures';
 
 class ToolBar extends React.PureComponent {
   static propTypes = {
@@ -33,6 +41,9 @@ class ToolBar extends React.PureComponent {
         break;
       case TOOL_CANVASCONFIG:
         component = <CanvasConfig />;
+        break;
+      case TOOL_TEXTURES:
+        component = <Textures />;
         break;
     }
 

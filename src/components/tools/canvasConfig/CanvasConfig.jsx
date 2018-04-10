@@ -13,6 +13,7 @@ class CanvasConfig extends React.PureComponent {
   static propTypes = {
     drawType: PropTypes.string,
     drawExclude: PropTypes.bool,
+    drawFloorTiles: PropTypes.bool,
 
     changeCanvasConfigProp: PropTypes.func.isRequired,
   };
@@ -20,13 +21,15 @@ class CanvasConfig extends React.PureComponent {
   render () {
     return (
       <div className="CanvasConfig">
-        Active area
+        <h4>Draw</h4>
 
         <DrawType
           drawType={this.props.drawType}
           drawExclude={this.props.drawExclude}
+          drawFloorTiles={this.props.drawFloorTiles}
           changeCanvasConfigProp={this.props.changeCanvasConfigProp}
         />
+
       </div>
     );
   }
