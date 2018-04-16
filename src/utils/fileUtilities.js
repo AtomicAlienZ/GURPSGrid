@@ -26,22 +26,27 @@ export const base64ToBlob = (base64Encoded, options) => {
 };
 
 /**
- * Transforms a string of base64-encoded data into a structure that can be uploaded programmatically, renamed etc.
- * We can not use {File} as IE does not support its constructor.
- * @param {string} base64Encoded
- * @param {object} blobOptions
+ * Transforms a dataUrl to File object
+ *
+ * @param {string} dataUrl
  * @param {string} name
  * @returns {Blob}
  */
-export const base64ToFileLike = (base64Encoded, blobOptions, name) => {
-  const fileLikeStructure = base64ToBlob( base64Encoded, blobOptions );
+export const dataUrlToFile = (dataUrl, name) => {
+  let arr = dataUrl.split(',');
+  let type = arr[0].match(/:(.*?);/)[1];
+  let bstr = atob(arr[1]);
+  let size = bstr.length;
+  let u8arr = new Uint8Array(size);
 
-  fileLikeStructure.name = name;
+  while (size--){
+    u8arr[size] = bstr.charCodeAt(size);
+  }
 
-  return fileLikeStructure;
+  return new File([u8arr], name, { type });
 };
 
-export function fileToBase64 (file) {
+export function fileToDataUrl (file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

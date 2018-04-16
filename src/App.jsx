@@ -26,6 +26,7 @@ import SVGCanvas from './components/SVGCanvas';
 import ToolBar from './components/ToolBar';
 import BaseHexGrid from './components/BaseHexGrid';
 import MouseOverlays from './components/MouseOverlays';
+import StorageSaveError from './components/StorageSaveError';
 
 class App extends React.PureComponent {
   static propTypes = {
@@ -33,6 +34,7 @@ class App extends React.PureComponent {
     overlays: PropTypes.arrayOf(PropTypes.object),
     activeHexes: PropTypes.arrayOf(PropTypes.array),
     canvasData: PropTypes.object,
+    storageSaveError: PropTypes.string,
 
     mouseMove: PropTypes.func.isRequired,
     mouseDown: PropTypes.func.isRequired,
@@ -97,6 +99,7 @@ class App extends React.PureComponent {
         </SVGCanvas>
 
         <ToolBar />
+        <StorageSaveError storageSaveError={this.props.storageSaveError} />
       </div>
     );
   }
@@ -107,6 +110,7 @@ const mapStateToProps = (state) => ({
   overlays: state.overlays,
   canvasData: state.canvasData,
   activeHexes: state.activeHexes,
+  storageSaveError: state.storageSaveError,
 });
 
 const mapDispatchToProps = (dispatch) => ({

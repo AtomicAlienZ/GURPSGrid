@@ -1,56 +1,52 @@
 import { getCenterPixels } from '../utils/hexStructures';
 import getViewPortDimensions from '../utils/getViewPortDimensions';
+import { STORAGE_AVAILIABLE, STORAGE_KEY, STORAGE, STORAGE_VERSION } from '../constants/stateStorage';
+import { dataUrlToFile } from '../utils/fileUtilities';
 
-// Col ; Row
-const activeHexes = [
-  // Blob 1 (with holes)
-  [-1, -1],
-  [0, -2],
+let restoredData = {};
 
-  [1, -2],
-  [0, 1],
-  [1, 0],
-  [0, 2],
-  [-1, 2],
-  [-2, 1],
-  [-1, 0],
-  [1, -1],
-  [2, 0],
-  [1, 2],
-  [2, 2],
-  [2, 1],
+if (STORAGE_AVAILIABLE) {
+  try {
+    const { version, data } = JSON.parse(STORAGE.getItem(STORAGE_KEY));
 
-  // Blob 2
-  [3, -2],
-  [4, -2],
-  [3, -1],
-  [4, -0],
-  [5, 0],
-  [5, -1],
-  [5, -2],
-  [6, -1],
-  [7, -1],
-  [8, -1],
-  [9, -1],
-];
+    if (version === STORAGE_VERSION) {
+      restoredData = data;
 
-// const activeHexes = [];
-// const siz = 27;
-// for (let col = -siz; col <= siz; col++) {
-//   for (let row = -siz; row <= siz; row++) {
-//     activeHexes.push([col, row]);
-//   }
-// }
+      // Rehydrating stuff
+      if ('textures' in restoredData) {
+        restoredData.textures = restoredData.textures
+          .map(({ id, name, dataUrl }) => {
+            let file = dataUrlToFile(dataUrl, name);
+            let preview = URL.createObjectURL(file);
+            let size = file.size;
+            let type = file.type;
 
-const { x, y } = getCenterPixels(activeHexes);
+            return {
+              id,
+              name,
+              dataUrl,
+              preview,
+              size,
+              type,
+            };
+          });
+      }
+    }
+  }
+  catch (e) { /* do nothing */ }
+}
+
+const { x, y } = getCenterPixels(restoredData.activeHexes || []);
 const { width: viewPortW, height: viewPortH } = getViewPortDimensions();
 
 export default {
   // These things should be persistent/saved to a file
   objects: [],
-  activeHexes,
+  activeHexes: [],
   floorAreas: [],
   textures: [],
+
+  ...restoredData,
 
   // Runtime stuff. Not needed to be persistent
   overlays: [],
@@ -85,4 +81,6 @@ export default {
 
   activeTool: null,
   activeToolData: null,
+
+  storageSaveError: null,
 };

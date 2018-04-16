@@ -7,7 +7,7 @@ import Alert from 'react-s-alert';
 import './Textures.scss';
 
 import { MAX_TEXTURE_SIZE } from '../../../constants/general';
-import { getFileSizeReadable, fileToBase64 } from '../../../utils/fileUtilities';
+import { getFileSizeReadable, fileToDataUrl } from '../../../utils/fileUtilities';
 
 import TexturesItem from './TexturesItem';
 
@@ -25,7 +25,7 @@ class Textures extends React.PureComponent {
 
   addTexture = (acceptedFiles, rejectedFiles) => {
     acceptedFiles.forEach((file) => {
-      fileToBase64(file)
+      fileToDataUrl(file)
         .then((dataUrl) => {
           this.props.texturesAdd(file, dataUrl);
           Alert.success(`Loaded ${file.name}`);

@@ -22,6 +22,8 @@ import texturesAdd from './tools/textures/texturesAdd';
 import texturesRemove from './tools/textures/texturesRemove';
 import texturesRename from './tools/textures/texturesRename';
 
+import storeState from './storeState';
+
 function reducer (state = initialState, action ) {
   let newState = state;
 
@@ -46,6 +48,8 @@ function reducer (state = initialState, action ) {
       }
       break;
   }
+
+  newState = storeState(state, newState);
 
   return newState;
 }
