@@ -26,3 +26,6 @@ export const STORAGE_AVAILIABLE = (function iifeCheckStorage () {
       && STORAGE.length !== 0;
   }
 }());
+
+export const STORAGE_FILE_EXTENSION = 'ggrid';
+export const STORAGE_FILE_DEFAULT_NAME = 'GURPSGrid';

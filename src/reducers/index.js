@@ -10,6 +10,7 @@ import {
   TEXTURES_ADD,
   TEXTURES_REMOVE,
   TEXTURES_RENAME,
+  SAVELOAD_APPLY_LOADED,
 } from '../actions/index';
 import mouseMove from './mouseMove';
 import mouseDown from '../reducers/mouseDown';
@@ -21,6 +22,7 @@ import canvasConfigChangeProp from './tools/canvasConfig/canvasConfigChangeProp'
 import texturesAdd from './tools/textures/texturesAdd';
 import texturesRemove from './tools/textures/texturesRemove';
 import texturesRename from './tools/textures/texturesRename';
+import saveLoadApplyLoaded from './tools/saveLoad/saveLoadApplyLoaded';
 
 import storeState from './storeState';
 
@@ -41,6 +43,8 @@ function reducer (state = initialState, action ) {
     case TEXTURES_ADD: newState = texturesAdd(state, action); break;
     case TEXTURES_REMOVE: newState = texturesRemove(state, action); break;
     case TEXTURES_RENAME: newState = texturesRename(state, action); break;
+
+    case SAVELOAD_APPLY_LOADED: newState = saveLoadApplyLoaded(state, action); break;
 
     default:
       if (process.env.NODE_ENV === 'development') {

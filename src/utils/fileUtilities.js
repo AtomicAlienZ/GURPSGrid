@@ -55,6 +55,15 @@ export function fileToDataUrl (file) {
   });
 }
 
+export function fileToPlainText (file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
 const sizes = ['Bytes', 'kB', 'MB', 'GB', 'TB'];
 const kilobyte = 1024;
 

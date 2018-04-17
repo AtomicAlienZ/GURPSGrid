@@ -35,3 +35,7 @@ export const texturesRename = (id, name) => ({ type: TEXTURES_RENAME, id, name }
 
 export const TEXTURES_REMOVE = 'TEXTURES_REMOVE';
 export const texturesRemove = (id) => ({ type: TEXTURES_REMOVE, id });
+
+// SaveLoad actions
+export const SAVELOAD_APPLY_LOADED = 'SAVELOAD_APPLY_LOADED';
+export const saveLoadApplyLoaded = (data) => ({ type: SAVELOAD_APPLY_LOADED, data });

@@ -11,12 +11,14 @@ import {
   TOOL_DEBUG,
   TOOL_CANVASCONFIG,
   TOOL_TEXTURES,
+  TOOL_SAVELOAD,
 } from '../constants/tools';
 import { centerCanvas, selectTool } from '../actions/index';
 
 import AppDebug from './tools/debug/AppDebug';
 import CanvasConfig from './tools/canvasConfig/CanvasConfig';
 import Textures from './tools/textures/Textures';
+import SaveLoad from './tools/saveLoad/SaveLoad';
 
 class ToolBar extends React.PureComponent {
   static propTypes = {
@@ -44,6 +46,9 @@ class ToolBar extends React.PureComponent {
         break;
       case TOOL_TEXTURES:
         component = <Textures />;
+        break;
+      case TOOL_SAVELOAD:
+        component = <SaveLoad />;
         break;
     }
 

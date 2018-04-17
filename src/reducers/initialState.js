@@ -1,37 +1,13 @@
 import { getCenterPixels } from '../utils/hexStructures';
 import getViewPortDimensions from '../utils/getViewPortDimensions';
-import { STORAGE_AVAILIABLE, STORAGE_KEY, STORAGE, STORAGE_VERSION } from '../constants/stateStorage';
-import { dataUrlToFile } from '../utils/fileUtilities';
+import { STORAGE_AVAILIABLE, STORAGE_KEY, STORAGE } from '../constants/stateStorage';
+import { rehydrateState } from '../utils/stateStorageUtilities';
 
 let restoredData = {};
 
 if (STORAGE_AVAILIABLE) {
   try {
-    const { version, data } = JSON.parse(STORAGE.getItem(STORAGE_KEY));
-
-    if (version === STORAGE_VERSION) {
-      restoredData = data;
-
-      // Rehydrating stuff
-      if ('textures' in restoredData) {
-        restoredData.textures = restoredData.textures
-          .map(({ id, name, dataUrl }) => {
-            let file = dataUrlToFile(dataUrl, name);
-            let preview = URL.createObjectURL(file);
-            let size = file.size;
-            let type = file.type;
-
-            return {
-              id,
-              name,
-              dataUrl,
-              preview,
-              size,
-              type,
-            };
-          });
-      }
-    }
+    restoredData = rehydrateState(STORAGE.getItem(STORAGE_KEY));
   }
   catch (e) { /* do nothing */ }
 }

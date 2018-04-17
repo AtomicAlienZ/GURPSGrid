@@ -1,12 +1,10 @@
-import getId from '../utils/getId';
-import { getObjectPart } from '../utils/objectUtilities';
 import {
-  STORAGE_VERSION,
   STORAGE_KEY,
   STORAGE_SUBSTATE_ITEMS,
   STORAGE_AVAILIABLE,
   STORAGE,
 } from '../constants/stateStorage';
+import { dehydrateState } from '../utils/stateStorageUtilities';
 
 export default function storeState (state, newState) {
   // Checking whether we need to actually save things
@@ -17,19 +15,7 @@ export default function storeState (state, newState) {
   );
 
   if (save) {
-    // Getting data needed to be saved
-    let data = getObjectPart(newState, STORAGE_SUBSTATE_ITEMS);
-
-    if ('textures' in data) {
-      data.textures = data.textures.map(({ id, name, dataUrl }) => ({ id, name, dataUrl }));
-    }
-
-    const savedState = JSON.stringify({
-      id: getId(),
-      version: STORAGE_VERSION,
-      date: new Date().getTime(),
-      data,
-    });
+    const savedState = dehydrateState(newState);
 
     try {
       STORAGE.setItem(STORAGE_KEY, savedState);
