@@ -1,24 +1,26 @@
-import getCanvasConfigToolState from './tools/canvasConfig/getCanvasConfigToolState';
-import removeCanvasConfigDrawOverlay from './tools/canvasConfig/removeCanvasConfigDrawOverlay';
-import { TOOL_CANVASCONFIG } from '../constants/tools';
+// import removeCanvasConfigDrawOverlay from './tools/canvasConfig/removeCanvasConfigDrawOverlay';
+import { TOOLS_DATA_MAP } from '../config/tools';
 
 export default function toolSelect (state, action) {
-  let getSubstate = null;
-
-  switch (action.tool) {
-    case TOOL_CANVASCONFIG:
-      getSubstate = getCanvasConfigToolState;
-      break;
-  }
+  const activeTool = action.tool !== state.activeTool ? action.tool : null;
 
   let newState = {
     ...state,
-    activeTool: action.tool !== state.activeTool ? action.tool : null,
-    activeToolData: getSubstate ? getSubstate(state) : null,
+    overlays: [],
+    draw: {
+      ...state.draw,
+      type: null,
+    },
   };
 
-  if (state.activeTool === TOOL_CANVASCONFIG) {
-    newState = removeCanvasConfigDrawOverlay(newState);
+  if (TOOLS_DATA_MAP[state.activeTool] && TOOLS_DATA_MAP[state.activeTool].onInactive) {
+    newState = TOOLS_DATA_MAP[state.activeTool].onInactive(newState);
+  }
+
+  newState.activeTool = activeTool;
+
+  if (TOOLS_DATA_MAP[state.activeTool] && TOOLS_DATA_MAP[state.activeTool].onActive) {
+    newState = TOOLS_DATA_MAP[state.activeTool].onActive(newState);
   }
 
   return newState;

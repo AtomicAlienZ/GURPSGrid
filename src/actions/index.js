@@ -8,6 +8,9 @@ export const mouseDown = (position, svgPosition) => ({ type: MOUSE_DOWN, positio
 export const MOUSE_UP = 'MOUSE_UP';
 export const mouseUp = (position) => ({ type: MOUSE_UP, position });
 
+export const MOUSE_LEAVE = 'MOUSE_LEAVE';
+export const mouseLeave = (position, svgPosition) => ({ type: MOUSE_LEAVE, position, svgPosition });
+
 // Canvas centering action
 export const CANVAS_CENTER = 'CANVAS_CENTER';
 export const centerCanvas = () => ({ type: CANVAS_CENTER });
@@ -20,11 +23,14 @@ export const selectTool = (tool) => ({ type: TOOL_SELECT, tool });
 export const VIEWPORT_RECALC = 'VIEWPORT_RECALC';
 export const viewportRecalc = (tool) => ({ type: VIEWPORT_RECALC, tool });
 
-// ================================ Tool-specific actions ================================
+// Draw actions
+export const DRAW_SET_TYPE = 'DRAW_SET_TYPE';
+export const drawSetType = (drawType) => ({ type: DRAW_SET_TYPE, drawType });
 
-// CanvasConfig tool actions
-export const CANVASCONFIG_CHANGE_PROP = 'CANVASCONFIG_CHANGE_PROP';
-export const canvasConfigChangeProp = (prop, value) => ({ type: CANVASCONFIG_CHANGE_PROP, prop, value });
+export const DRAW_SET_EXCLUDE = 'DRAW_SET_EXCLUDE';
+export const drawSetExclude = (exclude) => ({ type: DRAW_SET_EXCLUDE, exclude });
+
+// ================================ Tool-specific actions ================================
 
 // Textures tool actions
 export const TEXTURES_ADD = 'TEXTURES_ADD';

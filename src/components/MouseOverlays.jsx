@@ -3,74 +3,21 @@ import PropTypes from 'prop-types';
 
 import './MouseOverlays.scss';
 
-import AreaOverlay from './overlays/AreaOverlay';
-import RectangleOverlay from './overlays/RectangleOverlay';
-import LineOverlay from './overlays/LineOverlay';
-import CircleOverlay from './overlays/CircleOverlay';
-
-import {
-  CANVASCONFIGTOOL_RECT,
-  CANVASCONFIGTOOL_LINE,
-  CANVASCONFIGTOOL_CIRCLE,
-} from '../constants/mouseOverlays';
+import { OVERLAYS_COMPONENTS_MAP } from '../config/mouseOverlays';
 
 class MouseOverlays extends React.PureComponent {
   static propTypes = {
     overlays: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
-  renderOverlay = (overlayData, index) => {
-    switch (overlayData.type) {
-      case CANVASCONFIGTOOL_CIRCLE:
-        return (
-          <CircleOverlay
-            key={index}
-            classMod={overlayData.type}
-            col={overlayData.col}
-            row={overlayData.row}
-            radius={overlayData.radius}
-            pixelRadius={overlayData.pixelRadius}
-          />
-        );
-        break;
+  renderOverlay = (overlayData) => {
+    const Component = OVERLAYS_COMPONENTS_MAP[overlayData.type];
 
-      case CANVASCONFIGTOOL_LINE:
-        return (
-          <LineOverlay
-            key={index}
-            classMod={overlayData.type}
-            col={overlayData.col}
-            row={overlayData.row}
-            toCol={overlayData.toCol}
-            toRow={overlayData.toRow}
-          />
-        );
-        break;
-
-      case CANVASCONFIGTOOL_RECT:
-        return (
-          <RectangleOverlay
-            key={index}
-            classMod={overlayData.type}
-            col={overlayData.col}
-            row={overlayData.row}
-            toCol={overlayData.toCol}
-            toRow={overlayData.toRow}
-          />
-        );
-        break;
-
-      // Simple single hex
-      default:
-        return (
-          <AreaOverlay
-            key={index}
-            classMod={overlayData.type}
-            areaArray={[[overlayData.col, overlayData.row]]}
-          />
-        );
-        break;
+    if (Component) {
+      return <Component key={overlayData.id} {...overlayData} />;
     }
+
+    return null;
   };
 
   render () {

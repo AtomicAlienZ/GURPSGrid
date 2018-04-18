@@ -1,5 +1,5 @@
-import { TOOL_CANVASCONFIG } from '../constants/tools';
-import canvasConfigStartDraw from './tools/canvasConfig/canvasConfigStartDraw';
+import { TOOLS_DATA_MAP } from '../config/tools';
+import { pixelsToOddr } from '../utils/hexMath';
 
 export default function mouseDown (state, action) {
   if (!action.position) {
@@ -31,8 +31,17 @@ export default function mouseDown (state, action) {
     },
   };
 
-  if (newState.activeTool === TOOL_CANVASCONFIG) {
-    newState = canvasConfigStartDraw(newState, action);
+  if (state.draw.type) {
+    const hex = pixelsToOddr(action.svgPosition);
+    newState.draw.startCol = hex.col;
+    newState.draw.startRow = hex.row;
+
+    if (
+      TOOLS_DATA_MAP[state.activeTool]
+      && TOOLS_DATA_MAP[state.activeTool].onDrawStart
+    ) {
+      newState = TOOLS_DATA_MAP[state.activeTool].onDrawStart(newState, hex);
+    }
   }
 
   return newState;

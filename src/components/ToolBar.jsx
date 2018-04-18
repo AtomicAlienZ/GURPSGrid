@@ -7,18 +7,8 @@ import './ToolBar.scss';
 import {
   TOOLS,
   TOOLS_DATA_MAP,
-
-  TOOL_DEBUG,
-  TOOL_CANVASCONFIG,
-  TOOL_TEXTURES,
-  TOOL_SAVELOAD,
-} from '../constants/tools';
+} from '../config/tools';
 import { centerCanvas, selectTool } from '../actions/index';
-
-import AppDebug from './tools/debug/AppDebug';
-import CanvasConfig from './tools/canvasConfig/CanvasConfig';
-import Textures from './tools/textures/Textures';
-import SaveLoad from './tools/saveLoad/SaveLoad';
 
 class ToolBar extends React.PureComponent {
   static propTypes = {
@@ -35,24 +25,9 @@ class ToolBar extends React.PureComponent {
   };
 
   renderActiveTool = () => {
-    let component = null;
+    let Component = TOOLS_DATA_MAP[this.props.activeTool] && TOOLS_DATA_MAP[this.props.activeTool].component;
 
-    switch (this.props.activeTool) {
-      case TOOL_DEBUG:
-        component = <AppDebug />;
-        break;
-      case TOOL_CANVASCONFIG:
-        component = <CanvasConfig />;
-        break;
-      case TOOL_TEXTURES:
-        component = <Textures />;
-        break;
-      case TOOL_SAVELOAD:
-        component = <SaveLoad />;
-        break;
-    }
-
-    return component ? <div className="ToolBar__content">{component}</div> : null;
+    return Component ? <div className="ToolBar__content"><Component /></div> : null;
   };
 
   render () {

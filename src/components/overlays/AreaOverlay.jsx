@@ -6,7 +6,9 @@ import { hexArrayToMap } from '../../utils/hexStructures';
 
 class MouseOverlay extends React.PureComponent {
   static propTypes = {
-    areaArray: PropTypes.array.isRequired,
+    col: PropTypes.number,
+    row: PropTypes.number,
+    areaArray: PropTypes.array,
     classMod: PropTypes.string,
     drawGrid: PropTypes.bool,
   };
@@ -16,7 +18,7 @@ class MouseOverlay extends React.PureComponent {
   };
 
   render () {
-    const map = hexArrayToMap(this.props.areaArray);
+    const map = hexArrayToMap(this.props.areaArray || [[this.props.col, this.props.row]]);
 
     return (
       <g className="MouseOverlay">

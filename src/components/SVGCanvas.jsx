@@ -11,6 +11,7 @@ class SVGCanvas extends React.PureComponent {
     trackMouse: PropTypes.func.isRequired,
     onMouseDown: PropTypes.func.isRequired,
     onMouseUp: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired,
   };
 
   render () {
@@ -28,6 +29,7 @@ class SVGCanvas extends React.PureComponent {
         onMouseMove={this.props.trackMouse}
         onMouseDown={this.props.onMouseDown}
         onMouseUp={this.props.onMouseUp}
+        onMouseLeave={this.props.onMouseLeave}
       >
         {this.props.children}
       </svg>

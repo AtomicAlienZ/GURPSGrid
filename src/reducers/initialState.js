@@ -1,6 +1,6 @@
 import { getCenterPixels } from '../utils/hexStructures';
 import getViewPortDimensions from '../utils/getViewPortDimensions';
-import { STORAGE_AVAILIABLE, STORAGE_KEY, STORAGE } from '../constants/stateStorage';
+import { STORAGE_AVAILIABLE, STORAGE_KEY, STORAGE } from '../config/stateStorage';
 import { rehydrateState } from '../utils/stateStorageUtilities';
 
 let restoredData = {};
@@ -45,6 +45,8 @@ export default {
     svgPosition: {
       x: 0,
       y: 0,
+      prevX: 0,
+      prevY: 0,
     },
     buttonHeld: false,
     dragStartPosition: {
@@ -53,7 +55,17 @@ export default {
     },
   },
 
-  dragBlocked: false,
+  draw: {
+    type: null,
+    exclude: false,
+
+    // Used to detect hex coordinates change to draw only when needed
+    prevCol: null,
+    prevRow: null,
+
+    startCol: null,
+    startRow: null,
+  },
 
   activeTool: null,
   activeToolData: null,

@@ -3,7 +3,7 @@ import {
   STORAGE_SUBSTATE_ITEMS,
   STORAGE_AVAILIABLE,
   STORAGE,
-} from '../constants/stateStorage';
+} from '../config/stateStorage';
 import { dehydrateState } from '../utils/stateStorageUtilities';
 
 export default function storeState (state, newState) {

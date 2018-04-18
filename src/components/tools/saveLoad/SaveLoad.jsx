@@ -9,7 +9,7 @@ import './SaveLoad.scss';
 
 import Input from '../../ui/Input';
 
-import { STORAGE_FILE_DEFAULT_NAME, STORAGE_FILE_EXTENSION } from '../../../constants/stateStorage';
+import { STORAGE_FILE_DEFAULT_NAME, STORAGE_FILE_EXTENSION } from '../../../config/stateStorage';
 import { dehydrateState } from '../../../utils/stateStorageUtilities';
 import { fileToPlainText } from '../../../utils/fileUtilities';
 

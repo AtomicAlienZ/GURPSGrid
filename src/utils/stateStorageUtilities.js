@@ -1,4 +1,4 @@
-import { STORAGE_VERSION, STORAGE_SUBSTATE_ITEMS } from '../constants/stateStorage';
+import { STORAGE_VERSION, STORAGE_SUBSTATE_ITEMS } from '../config/stateStorage';
 import { getObjectPart } from './objectUtilities';
 import getId from './getId';
 import { dataUrlToFile } from '../utils/fileUtilities';

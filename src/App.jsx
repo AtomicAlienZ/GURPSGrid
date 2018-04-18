@@ -15,12 +15,12 @@ import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 import './App.scss';
 
-import { mouseMove, mouseUp, mouseDown, viewportRecalc } from './actions/index';
+import { mouseMove, mouseUp, mouseDown, viewportRecalc, mouseLeave } from './actions/index';
 
 import getGlobalMousePosition from './utils/getGlobalMousePosition';
 import getSVGMousePosition from './utils/getSVGMousePosition';
 import isLeftMouseButton from './utils/isLeftMouseButton';
-import { MOUSEMOVE_THROTTLE_INTERVAL } from './constants/general';
+import { MOUSEMOVE_THROTTLE_INTERVAL } from './config/general';
 
 import SVGCanvas from './components/SVGCanvas';
 import ToolBar from './components/ToolBar';
@@ -39,6 +39,7 @@ class App extends React.PureComponent {
     mouseMove: PropTypes.func.isRequired,
     mouseDown: PropTypes.func.isRequired,
     mouseUp: PropTypes.func.isRequired,
+    mouseLeave: PropTypes.func.isRequired,
     viewportRecalc: PropTypes.func.isRequired,
   };
 
@@ -73,6 +74,10 @@ class App extends React.PureComponent {
     }
   };
 
+  onMouseLeave = (event) => {
+    this.props.mouseLeave(getGlobalMousePosition(event), getSVGMousePosition(event));
+  };
+
   componentWillMount = () => {
     window.addEventListener('resize', this.throttledOnViewportResize);
   };
@@ -90,6 +95,7 @@ class App extends React.PureComponent {
           trackMouse={this.trackMouse}
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
+          onMouseLeave={this.onMouseLeave}
         >
           <BaseHexGrid activeHexes={this.props.activeHexes} />
 
@@ -117,6 +123,7 @@ const mapDispatchToProps = (dispatch) => ({
   mouseMove (position, svgPosition) { dispatch(mouseMove(position, svgPosition)); },
   mouseDown (position, svgPosition) { dispatch(mouseDown(position, svgPosition)); },
   mouseUp (position) { dispatch(mouseUp(position)); },
+  mouseLeave (position, svgPosition) { dispatch(mouseLeave(position, svgPosition)); },
   viewportRecalc () { dispatch(viewportRecalc()); },
 });
 

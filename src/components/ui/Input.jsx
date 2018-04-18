@@ -4,7 +4,7 @@ import { debounce } from 'underscore';
 
 import './Input.scss';
 
-import { INPUT_SAVE_TIMEOUT } from '../../constants/general';
+import { INPUT_SAVE_TIMEOUT } from '../../config/general';
 
 class Input extends React.PureComponent {
   static propTypes = {

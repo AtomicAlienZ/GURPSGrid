@@ -1,36 +1,13 @@
-import { pixelsToOddr } from '../../../utils/hexMath';
 import { addToStateArray, removeFromStateArray } from '../../../utils/hexStructures';
-import { DRAWTYPE_FREEFORM } from '../../../constants/canvasConfig';
+import { DRAWTYPE_FREEFORM } from '../../../config/drawTypes';
 
-export default function canvasConfigDraw (state) {
-  if (state.activeToolData.drawType) {
-    const hex = pixelsToOddr(state.mouseData.svgPosition);
-    let newState = {
+export default function canvasConfigDraw (state, hex) {
+  if (state.draw.type === DRAWTYPE_FREEFORM) {
+    const func = state.draw.exclude ? removeFromStateArray : addToStateArray;
+    return {
       ...state,
-      dragBlocked: true,
+      activeHexes: func(state.activeHexes, hex),
     };
-
-    // Freeform draw
-    if (
-      state.activeToolData.drawType === DRAWTYPE_FREEFORM
-      && (
-        hex.col !== state.activeToolData.drawPrevCol
-        || hex.row !== state.activeToolData.drawPrevRow
-      )
-    ) {
-      const func = state.activeToolData.drawExclude ? removeFromStateArray : addToStateArray;
-      newState = {
-        ...newState,
-        activeHexes: func(newState.activeHexes, hex),
-        activeToolData: {
-          ...state.activeToolData,
-          drawPrevCol: hex.col,
-          drawPrevRow: hex.row,
-        },
-      };
-    }
-
-    return newState;
   }
 
   return state;

@@ -1,7 +1,17 @@
-import { MOUSE_CLICK_TOLERANCE } from '../constants/general';
-import { TOOL_CANVASCONFIG } from '../constants/tools';
-
-import canvasConfigEndDraw from './tools/canvasConfig/canvasConfigEndDraw';
+import addOverlay from './draw/addOverlay';
+import { MOUSE_CLICK_TOLERANCE } from '../config/general';
+import { TOOLS_DATA_MAP } from '../config/tools';
+import { DRAWTYPE_CIRCLE, DRAWTYPE_LINE, DRAWTYPE_RECTANGLE } from '../config/drawTypes';
+import { DRAW_1HEX } from '../config/mouseOverlays';
+import {
+  pixelsToOddr,
+  getRadiusByMousePosition,
+} from '../utils/hexMath';
+import {
+  getRectHexAreaAsStateArray,
+  getLineHexAreaAsStateArray,
+  getCircleHexAreaAsStateArray,
+} from '../utils/hexStructures';
 
 export default function mouseDown (state, action) {
   if (!action.position) {
@@ -40,8 +50,42 @@ export default function mouseDown (state, action) {
   // between mousedown and mouseup events
   const isClick = mouseMovedDistance <= MOUSE_CLICK_TOLERANCE;
 
-  if (state.activeTool === TOOL_CANVASCONFIG) {
-    newState = canvasConfigEndDraw(newState, action, isClick);
+  if (state.draw.type) {
+    const hex = pixelsToOddr(newState.mouseData.svgPosition);
+    let newHexes = [];
+
+    newState.draw = {
+      ...newState.draw,
+      prevCol: null,
+      prevRow: null,
+      startCol: null,
+      startRow: null,
+    };
+
+    if (
+      TOOLS_DATA_MAP[state.activeTool]
+      && TOOLS_DATA_MAP[state.activeTool].onDrawEnd
+    ) {
+      let start = { col: state.draw.startCol, row: state.draw.startRow };
+      const { radius } = getRadiusByMousePosition(start, state.mouseData.svgPosition);
+
+      switch (state.draw.type) {
+        case DRAWTYPE_RECTANGLE:
+          newHexes = getRectHexAreaAsStateArray(start, hex);
+          break;
+        case DRAWTYPE_LINE:
+          newHexes = getLineHexAreaAsStateArray(start, hex);
+          break;
+        case DRAWTYPE_CIRCLE:
+          newHexes = getCircleHexAreaAsStateArray(start, radius);
+          break;
+      }
+
+      newState = TOOLS_DATA_MAP[state.activeTool].onDrawEnd(newState, newHexes, isClick);
+    }
+
+    // Processing overlays
+    newState = addOverlay(newState, DRAW_1HEX);
   }
 
   return newState;

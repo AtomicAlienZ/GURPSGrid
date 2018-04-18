@@ -6,7 +6,7 @@ import Alert from 'react-s-alert';
 
 import './Textures.scss';
 
-import { MAX_TEXTURE_SIZE } from '../../../constants/general';
+import { MAX_TEXTURE_SIZE } from '../../../config/general';
 import { getFileSizeReadable, fileToDataUrl } from '../../../utils/fileUtilities';
 
 import TexturesItem from './TexturesItem';

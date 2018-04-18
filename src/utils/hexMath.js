@@ -4,7 +4,7 @@
  * Source: https://www.redblobgames.com/grids/hexagons/
  * Note: “odd-r” horizontal layout coordinate grid is used
  */
-import { HEX_SIZE, HEX_WIDTH } from '../constants/grid';
+import { HEX_SIZE, HEX_WIDTH } from '../config/grid';
 import roundToDecimals from './roundToDecimals';
 
 export function isEven (number) {

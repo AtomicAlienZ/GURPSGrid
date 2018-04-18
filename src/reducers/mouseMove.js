@@ -1,6 +1,25 @@
-import { TOOL_CANVASCONFIG } from '../constants/tools';
-import canvasConfigAddDrawOverlay from './tools/canvasConfig/canvasConfigAddDrawOverlay';
-import canvasConfigDraw from './tools/canvasConfig/canvasConfigDraw';
+import addOverlay from './draw/addOverlay';
+import { TOOLS_DATA_MAP } from '../config/tools';
+import { pixelsToOddr } from '../utils/hexMath';
+import {
+  DRAW_RECT,
+  DRAW_LINE,
+  DRAW_CIRC,
+  DRAW_1HEX,
+} from '../config/mouseOverlays';
+import {
+  DRAWTYPE_FREEFORM,
+  DRAWTYPE_RECTANGLE,
+  DRAWTYPE_LINE,
+  DRAWTYPE_CIRCLE,
+} from '../config/drawTypes';
+
+const DRAW_OVERLAY_TYPEMAP = {
+  [DRAWTYPE_FREEFORM]: DRAW_1HEX,
+  [DRAWTYPE_RECTANGLE]: DRAW_RECT,
+  [DRAWTYPE_LINE]: DRAW_LINE,
+  [DRAWTYPE_CIRCLE]: DRAW_CIRC,
+};
 
 function dragEverything (state, newState) {
   const dx = state.mouseData.position.x - state.mouseData.dragStartPosition.x;
@@ -23,7 +42,6 @@ export default function mouseMove (state, action) {
 
   let newState = {
     ...state,
-    dragBlocked: false,
     mouseData: {
       ...state.mouseData,
       position: {
@@ -33,22 +51,48 @@ export default function mouseMove (state, action) {
       svgPosition: {
         ...state.mouseData.svgPosition,
         ...action.svgPosition,
+        prevX: state.mouseData.svgPosition.x,
+        prevY: state.mouseData.svgPosition.y,
       },
     },
   };
 
-  if (state.mouseData.buttonHeld) {
-    if (state.activeTool === TOOL_CANVASCONFIG) {
-      newState = canvasConfigDraw(newState, action);
-    }
+  const hex = pixelsToOddr(newState.mouseData.svgPosition);
 
-    if (!newState.dragBlocked) {
+  if (state.mouseData.buttonHeld) {
+    if (!newState.draw.type) {
       newState = dragEverything(state, newState);
+    }
+    else {
+      if (hex.col !== state.draw.prevCol || hex.row !== state.draw.prevRow) {
+        newState.draw.prevCol = hex.col;
+        newState.draw.prevRow = hex.row;
+      }
+
+      if (
+        TOOLS_DATA_MAP[state.activeTool]
+        && TOOLS_DATA_MAP[state.activeTool].onDraw
+      ) {
+        newState = TOOLS_DATA_MAP[state.activeTool].onDraw(newState, hex);
+      }
     }
   }
 
-  if (state.activeTool === TOOL_CANVASCONFIG) {
-    newState = canvasConfigAddDrawOverlay(newState);
+  if (newState.draw.type) {
+    const type = state.mouseData.buttonHeld ? DRAW_OVERLAY_TYPEMAP[newState.draw.type] || DRAW_1HEX : DRAW_1HEX;
+    const prevHex = pixelsToOddr({ x: state.mouseData.svgPosition.x, y: state.mouseData.svgPosition.y });
+
+    if (newState.draw.type === DRAWTYPE_CIRCLE || hex.col !== prevHex.col || hex.row !== prevHex.row) {
+      newState = addOverlay(newState, type);
+      // console.log(newState.overlays[0]);
+    }
+  }
+
+  if (
+    TOOLS_DATA_MAP[state.activeTool]
+    && TOOLS_DATA_MAP[state.activeTool].onMouseMove
+  ) {
+    newState = TOOLS_DATA_MAP[state.activeTool].onMouseMove(newState, hex);
   }
 
   return newState;

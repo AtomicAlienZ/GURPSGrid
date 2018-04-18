@@ -1,29 +1,13 @@
-import { DRAWTYPE_FREEFORM } from '../../../constants/canvasConfig';
-import { pixelsToOddr } from '../../../utils/hexMath';
+import { DRAWTYPE_FREEFORM } from '../../../config/drawTypes';
 import { addToStateArray, removeFromStateArray } from '../../../utils/hexStructures';
 
-export default function canvasConfigStartDraw (state, action) {
-  if (state.activeToolData.drawType) {
-    const { col: startCol, row: startRow } = pixelsToOddr(action.svgPosition);
-
-    let newState = {
+export default function canvasConfigStartDraw (state, hex) {
+  if (state.draw.type === DRAWTYPE_FREEFORM) {
+    const func = state.draw.exclude ? removeFromStateArray : addToStateArray;
+    return {
       ...state,
-      activeToolData: {
-        ...state.activeToolData,
-        startCol,
-        startRow,
-      },
+      activeHexes: func(state.activeHexes, hex),
     };
-
-    if (state.activeToolData.drawType === DRAWTYPE_FREEFORM) {
-      const func = state.activeToolData.drawExclude ? removeFromStateArray : addToStateArray;
-      newState = {
-        ...newState,
-        activeHexes: func(newState.activeHexes, pixelsToOddr(newState.mouseData.svgPosition)),
-      };
-    }
-
-    return newState;
   }
 
   return state;
