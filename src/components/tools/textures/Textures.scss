@@ -1,0 +1,14 @@
+.Textures {
+  &__dropzone {
+    border: 1px dashed lightgray;
+    font-size: 13px;
+    color: lightgray;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: 3;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}

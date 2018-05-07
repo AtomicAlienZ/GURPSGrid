@@ -1,0 +1,71 @@
+.FloorArea {
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 10px 36px 10px 10px;
+  opacity: .5;
+  cursor: pointer;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 10px 0;
+  position: relative;
+
+  transition: all .2s;
+
+  &_selected {
+    opacity: 1;
+    padding: 9px;
+    border-width: 2px;
+  }
+
+  &__texture {
+    flex: 0 0 70px;
+    height: 70px;
+    background: transparent center center no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  &__textureContainer {
+    display: block;
+    height: 70px;
+    width: 70px;
+    background: transparent center center no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+  }
+
+  &__data {
+    flex: 1 1 auto;
+    margin-right: 10px;
+  }
+
+  &__controls {
+    margin-left: auto;
+    height: 17px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  &__control {
+    &:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+
+  &__remove {
+    color: red;
+  }
+
+  &__drawtype {
+    margin-bottom: 5px;
+    flex-basis: 100%;
+  }
+
+  &__aux {
+    font-size: 80%;
+    color: gray;
+    margin-top: 5px;
+  }
+}

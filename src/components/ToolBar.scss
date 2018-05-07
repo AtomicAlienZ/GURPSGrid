@@ -1,0 +1,19 @@
+.ToolBar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 1px solid #F0F0F0;
+
+  &__buttons {
+    text-align: right;
+  }
+
+  &__content {
+    padding: 20px;
+    width: 100vw;
+    max-width: 450px;
+    background: #fff;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(#000, .5);
+  }
+}
