@@ -1,0 +1,49 @@
+.ui-texturesSelect {
+  &__valueDisplay, &__optionDisplay {
+    display: block;
+    height: 70px;
+    width: 70px;
+    background: transparent center center no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+  }
+
+  .Select-control {
+    height: 72px;
+    border: 0;
+  }
+
+  .Select-arrow-zone {
+    display: none;
+  }
+
+  .Select-menu-outer {
+    min-width: 100%;
+    width: auto;
+    left: -11px;
+  }
+
+  .Select-value {
+    padding-left: 0!important;
+    padding-right: 25px!important;
+  }
+
+  .Select-placeholder {
+    height: 70px;
+    width: 70px;
+    text-indent: -1000px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    &:before {
+      content: '?';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-indent: 0;
+      font-size: 60px;
+      opacity: .5;
+    }
+  }
+}

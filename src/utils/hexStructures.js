@@ -136,3 +136,7 @@ export function mergeStateArrays (original, addition) {
 export function substractStateArrays (original, substraction) {
   return substraction.reduce(removeFromStateArray, original);
 }
+
+export function intersectMapAndArray (map, arr) {
+  return arr.filter(([col, row]) => mapHasHex(map, { col, row }));
+}

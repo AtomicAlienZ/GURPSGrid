@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getHexLine } from '../../utils/hexMath';
-import { getAreaOutlinePath } from '../../utils/hexDraw';
-import { hexArrayToMap } from '../../utils/hexStructures';
+import { getHexLine } from '../../../utils/hexMath';
+import { getAreaOutlinePath } from '../../../utils/hexDraw';
+import { hexArrayToMap } from '../../../utils/hexStructures';
 
 class LineOverlay extends React.PureComponent {
   static propTypes = {

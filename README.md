@@ -9,8 +9,8 @@ Built using React + react-redux, will extensively use modern browser APIs.
 Features:  
   
 \+ Base map creation with arbitrary geometry  
-\- Textured floor tiles  
+\+ Textured floor tiles  
 \- Object placement and customisation  
 \- "Map building" & "game" modes  
 \- Lines of sight, pathfinding etc  
-\- Save/Load functionality (based on files)
+\+ Save/Load functionality (based on files)

@@ -19,8 +19,8 @@ export default function toolSelect (state, action) {
 
   newState.activeTool = activeTool;
 
-  if (TOOLS_DATA_MAP[state.activeTool] && TOOLS_DATA_MAP[state.activeTool].onActive) {
-    newState = TOOLS_DATA_MAP[state.activeTool].onActive(newState);
+  if (TOOLS_DATA_MAP[activeTool] && TOOLS_DATA_MAP[activeTool].onActive) {
+    newState = TOOLS_DATA_MAP[activeTool].onActive(newState);
   }
 
   return newState;

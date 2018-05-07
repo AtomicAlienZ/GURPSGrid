@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getHexCircle, oddrToPixels } from '../../utils/hexMath';
-import { hexArrayToMap } from '../../utils/hexStructures';
-import { getAreaOutlinePath } from '../../utils/hexDraw';
+import { getHexCircle, oddrToPixels } from '../../../utils/hexMath';
+import { hexArrayToMap } from '../../../utils/hexStructures';
+import { getAreaOutlinePath } from '../../../utils/hexDraw';
 
 class CircleOverlay extends React.PureComponent {
   static propTypes = {

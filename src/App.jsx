@@ -4,6 +4,8 @@ import _ from 'underscore';
 import { connect } from 'react-redux';
 import Alert from 'react-s-alert';
 
+// Third-party libraries' CSS
+import 'react-select/dist/react-select.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 // import 'react-s-alert/dist/s-alert-css-effects/scale.css';
@@ -14,6 +16,7 @@ import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 // import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 
 import './App.scss';
+import './components/ui/ui.scss';
 
 import { mouseMove, mouseUp, mouseDown, viewportRecalc, mouseLeave } from './actions/index';
 
@@ -23,16 +26,16 @@ import isLeftMouseButton from './utils/isLeftMouseButton';
 import { MOUSEMOVE_THROTTLE_INTERVAL } from './config/general';
 
 import SVGCanvas from './components/SVGCanvas';
+import Defs from './components/Defs';
 import ToolBar from './components/ToolBar';
 import BaseHexGrid from './components/BaseHexGrid';
-import MouseOverlays from './components/MouseOverlays';
+import Overlays from './components/Overlays';
+import FloorAreas from './components/floorAreas/FloorAreas';
 import StorageSaveError from './components/StorageSaveError';
 
 class App extends React.PureComponent {
   static propTypes = {
     // objects: PropTypes.arrayOf(PropTypes.object),
-    overlays: PropTypes.arrayOf(PropTypes.object),
-    activeHexes: PropTypes.arrayOf(PropTypes.array),
     canvasData: PropTypes.object,
     storageSaveError: PropTypes.string,
 
@@ -97,11 +100,15 @@ class App extends React.PureComponent {
           onMouseUp={this.onMouseUp}
           onMouseLeave={this.onMouseLeave}
         >
-          <BaseHexGrid activeHexes={this.props.activeHexes} />
+          <Defs />
+
+          <BaseHexGrid />
+
+          <FloorAreas />
 
           {/*TODO {this.props.objects}*/}
 
-          <MouseOverlays overlays={this.props.overlays} />
+          <Overlays />
         </SVGCanvas>
 
         <ToolBar />
@@ -113,9 +120,7 @@ class App extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   objects: state.objects,
-  overlays: state.overlays,
   canvasData: state.canvasData,
-  activeHexes: state.activeHexes,
   storageSaveError: state.storageSaveError,
 });
 

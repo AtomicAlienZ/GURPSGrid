@@ -45,3 +45,22 @@ export const texturesRemove = (id) => ({ type: TEXTURES_REMOVE, id });
 // SaveLoad actions
 export const SAVELOAD_APPLY_LOADED = 'SAVELOAD_APPLY_LOADED';
 export const saveLoadApplyLoaded = (data) => ({ type: SAVELOAD_APPLY_LOADED, data });
+
+// FloorAreas actions
+export const FLOORAREAS_ADD = 'FLOORAREAS_ADD';
+export const floorAreasAdd = (data) => ({ type: FLOORAREAS_ADD, data });
+
+export const FLOORAREAS_SELECT = 'FLOORAREAS_SELECT';
+export const floorAreasSelect = (id) => ({ type: FLOORAREAS_SELECT, id });
+
+export const FLOORAREAS_DELETE = 'FLOORAREAS_DELETE';
+export const floorAreasDelete = (id) => ({ type: FLOORAREAS_DELETE, id });
+
+export const FLOORAREAS_EDIT = 'FLOORAREAS_EDIT';
+export const floorAreasEdit = (id) => ({ type: FLOORAREAS_EDIT, id });
+
+export const FLOORAREAS_UPDATE = 'FLOORAREAS_UPDATE';
+export const floorAreasUpdate = (data) => ({ type: FLOORAREAS_UPDATE, data });
+
+export const FLOORAREAS_MOVE = 'FLOORAREAS_MOVE';
+export const floorAreasMove = (id, moveUp) => ({ type: FLOORAREAS_MOVE, id, moveUp });

@@ -13,6 +13,12 @@ import {
   TEXTURES_REMOVE,
   TEXTURES_RENAME,
   SAVELOAD_APPLY_LOADED,
+  FLOORAREAS_ADD,
+  FLOORAREAS_DELETE,
+  FLOORAREAS_SELECT,
+  FLOORAREAS_EDIT,
+  FLOORAREAS_UPDATE,
+  FLOORAREAS_MOVE,
 } from '../actions/index';
 import mouseMove from './mouseMove';
 import mouseDown from '../reducers/mouseDown';
@@ -27,6 +33,12 @@ import texturesAdd from './tools/textures/texturesAdd';
 import texturesRemove from './tools/textures/texturesRemove';
 import texturesRename from './tools/textures/texturesRename';
 import saveLoadApplyLoaded from './tools/saveLoad/saveLoadApplyLoaded';
+import floorAreasAdd from './tools/floorAreas/floorAreasAdd';
+import floorAreasSelect from './tools/floorAreas/floorAreasSelect';
+import floorAreasDelete from './tools/floorAreas/floorAreasDelete';
+import floorAreasEdit from './tools/floorAreas/floorAreasEdit';
+import floorAreasUpdate from './tools/floorAreas/floorAreasUpdate';
+import floorAreasMove from './tools/floorAreas/floorAreasMove';
 
 import storeState from './storeState';
 
@@ -51,6 +63,13 @@ function reducer (state = initialState, action ) {
     case TEXTURES_RENAME: newState = texturesRename(state, action); break;
 
     case SAVELOAD_APPLY_LOADED: newState = saveLoadApplyLoaded(state, action); break;
+
+    case FLOORAREAS_ADD: newState = floorAreasAdd(state, action); break;
+    case FLOORAREAS_DELETE: newState = floorAreasDelete(state, action); break;
+    case FLOORAREAS_SELECT: newState = floorAreasSelect(state, action); break;
+    case FLOORAREAS_EDIT: newState = floorAreasEdit(state, action); break;
+    case FLOORAREAS_UPDATE: newState = floorAreasUpdate(state, action); break;
+    case FLOORAREAS_MOVE: newState = floorAreasMove(state, action); break;
 
     default:
       if (process.env.NODE_ENV === 'development') {

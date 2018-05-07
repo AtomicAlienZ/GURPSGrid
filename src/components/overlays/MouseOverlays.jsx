@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import './MouseOverlays.scss';
 
-import { OVERLAYS_COMPONENTS_MAP } from '../config/mouseOverlays';
+import { OVERLAYS_COMPONENTS_MAP } from '../../config/mouseOverlays';
 
 class MouseOverlays extends React.PureComponent {
   static propTypes = {
@@ -21,12 +22,10 @@ class MouseOverlays extends React.PureComponent {
   };
 
   render () {
-    return (
-      <g>
-        {this.props.overlays.map(this.renderOverlay)}
-      </g>
-    );
+    return this.props.overlays.map(this.renderOverlay);
   }
 }
 
-export default MouseOverlays;
+const mapStateToProps = ({ overlays }) => ({ overlays });
+
+export default connect(mapStateToProps)(MouseOverlays);

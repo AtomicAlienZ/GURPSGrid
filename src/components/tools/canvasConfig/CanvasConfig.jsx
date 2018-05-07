@@ -2,7 +2,7 @@ import React from 'react';
 
 import './CanvasConfig.scss';
 
-import DrawType from './DrawType';
+import DrawType from '../../DrawType';
 
 class CanvasConfig extends React.PureComponent {
   static propTypes = {};

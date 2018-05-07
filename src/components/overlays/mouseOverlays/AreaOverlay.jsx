@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getAreaOutlinePath, getAreaInnerPath } from '../../utils/hexDraw';
-import { hexArrayToMap } from '../../utils/hexStructures';
+import { getAreaOutlinePath, getAreaInnerPath } from '../../../utils/hexDraw';
+import { hexArrayToMap } from '../../../utils/hexStructures';
 
 class MouseOverlay extends React.PureComponent {
   static propTypes = {

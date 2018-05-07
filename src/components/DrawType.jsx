@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { DRAWTYPES } from '../../../config/drawTypes';
+import { DRAWTYPES } from '../config/drawTypes';
 
 // actions
-import { drawSetType, drawSetExclude } from '../../../actions/index';
+import { drawSetType, drawSetExclude } from '../actions/index';
 
 class DrawType extends React.PureComponent {
   static propTypes = {

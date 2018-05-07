@@ -1,7 +1,7 @@
-import AreaOverlay from '../components/overlays/AreaOverlay';
-import RectangleOverlay from '../components/overlays/RectangleOverlay';
-import LineOverlay from '../components/overlays/LineOverlay';
-import CircleOverlay from '../components/overlays/CircleOverlay';
+import AreaOverlay from '../components/overlays/mouseOverlays/AreaOverlay';
+import RectangleOverlay from '../components/overlays/mouseOverlays/RectangleOverlay';
+import LineOverlay from '../components/overlays/mouseOverlays/LineOverlay';
+import CircleOverlay from '../components/overlays/mouseOverlays/CircleOverlay';
 
 export const DRAW_1HEX = 'DRAW_1HEX';
 export const DRAW_AREA = 'DRAW_AREA';

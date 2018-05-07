@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getRectOutlinePath } from '../../utils/hexDraw';
+import { getRectOutlinePath } from '../../../utils/hexDraw';
 
 class RectangleOverlay extends React.PureComponent {
   static propTypes = {

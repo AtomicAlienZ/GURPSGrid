@@ -8,13 +8,17 @@ export const TOOL_FLOORAREAS = 'TOOL_FLOORAREAS';
 // Components
 import SaveLoad from '../components/tools/saveLoad/SaveLoad';
 import Textures from '../components/tools/textures/Textures';
+import FloorAreas from '../components/tools/floorAreas/FloorAreas';
 import CanvasConfig from '../components/tools/canvasConfig/CanvasConfig';
 import AppDebug from '../components/tools/debug/AppDebug';
 
 // Components' subreducers
 import canvasConfigDraw from '../reducers/tools/canvasConfig/canvasConfigDraw';
-import canvasConfigStartDraw from '../reducers/tools/canvasConfig/canvasConfigStartDraw';
 import canvasConfigEndDraw from '../reducers/tools/canvasConfig/canvasConfigEndDraw';
+
+import floorAreasOnActive from '../reducers/tools/floorAreas/floorAreasOnActive';
+import floorAreasEndDraw from '../reducers/tools/floorAreas/floorAreasEndDraw';
+import floorAreasDraw from '../reducers/tools/floorAreas/floorAreasDraw';
 
 export const TOOLS = [
   TOOL_CANVASCONFIG,
@@ -36,7 +40,7 @@ export const TOOLS_DATA_MAP = {
     onActive: null,
     onInactive: null,
     onMouseMove: null,
-    onDrawStart: canvasConfigStartDraw,
+    onDrawStart: canvasConfigDraw,
     onDraw: canvasConfigDraw,
     onDrawEnd: canvasConfigEndDraw,
   },
@@ -73,11 +77,11 @@ export const TOOLS_DATA_MAP = {
   [TOOL_FLOORAREAS]: {
     name: 'Floor Areas',
     icon: 'hexagon-multiple',
-    component: null,
-    onActive: null,
+    component: FloorAreas,
+    onActive: floorAreasOnActive,
     onInactive: null,
-    onDrawStart: null,
-    onDraw: null,
-    onDrawEnd: null,
+    onDrawStart: floorAreasDraw,
+    onDraw: floorAreasDraw,
+    onDrawEnd: floorAreasEndDraw,
   },
 };
